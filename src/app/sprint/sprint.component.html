@@ -1,0 +1,89 @@
+<div class="main">
+  <p>Sprints</p>
+  <div class="project-table-container">
+    <div class="table-header">
+      <mat-form-field appearance="outline">
+        <mat-label>Filter Sprints</mat-label>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Search by name or status"
+        />
+      </mat-form-field>
+      <button
+        mat-fab
+        color="primary"
+        aria-label="Example icon button with a delete icon"
+        (click)="open()"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <ng-container matColumnDef="sprintId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Sr.No</th>
+        <td mat-cell *matCellDef="let sprint; let i = index">{{ i + 1 }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="sprintNo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Sprint No</th>
+        <td mat-cell *matCellDef="let sprint">{{ sprint.sprintNo }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="sprintName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Sprint Name</th>
+        <td mat-cell *matCellDef="let sprint">{{ sprint.sprintName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="sprintPoint">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Sprint Point</th>
+        <td mat-cell *matCellDef="let sprint">{{ sprint.sprintPoint }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="startDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</th>
+        <td mat-cell *matCellDef="let sprint">{{ sprint.startDate | date}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="endDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>End Date</th>
+        <td mat-cell *matCellDef="let sprint">{{ sprint.endDate | date }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="board">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Board Name</th>
+        <td mat-cell *matCellDef="let sprint">{{ sprint.board }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let sprint; let i; index">
+          <button
+            mat-button
+            color="primary"
+            (click)="openProjectForm(sprint, sprint.sprintId)"
+          >
+            Edit
+          </button>
+          <button
+            mat-button
+            color="warn"
+            (click)="deleteSprint(sprint.sprintId)"
+          >
+            Delete
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Header and Row Declarations -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
+</div>

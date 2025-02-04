@@ -1,0 +1,54 @@
+<div class="main">
+  <h1>Epic Form</h1>
+  <form [formGroup]="epicForm" class="form" (ngSubmit)="save()">
+    <mat-form-field appearance="outline" class="input">
+      <mat-label>Epic Name</mat-label>
+      <input
+        matInput
+        formControlName="epicName"
+        title="epic name"
+        placeholder="Enter a epic name"
+      />
+      <mat-error *ngIf="epicForm.get('epicName')?.hasError('required')"
+        >Epic name is required</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="input">
+      <mat-label>Epic Description</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        title="epic description"
+        placeholder="Enter a description for the epic"
+      >
+      </textarea>
+      <mat-error *ngIf="epicForm.get('description')?.hasError('required')"
+        >Epic Description is required</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="input">
+      <mat-select
+        class="custom-select"
+        formControlName="project"
+        placeholder="select a project"
+      >
+        <mat-option
+          *ngFor="let project of projects"
+          [value]="project.projectId"
+          >{{ project.projectName }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      [disabled]="epicForm.invalid"
+    >
+      {{ value }}
+    </button>
+  </form>
+</div>

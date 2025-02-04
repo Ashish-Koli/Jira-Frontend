@@ -1,0 +1,92 @@
+<mat-card class="story-card" *ngIf="story != null">
+  <!-- Story Header -->
+  <mat-card-header>
+    <mat-card-title class="title">{{ story.storyName }}</mat-card-title>
+    <mat-card-subtitle>
+      <span
+        class="status-badge"
+        [ngClass]="story.storyStatus.name.toLowerCase()"
+        >{{ story.storyStatus.name }}</span
+      >
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <!-- Story Content -->
+  <mat-card-content>
+    <p class="description">{{ story.description }}</p>
+
+    <div class="story-details">
+      <mat-icon>person</mat-icon>
+      <span> {{ story.user.userName }}</span>
+    </div>
+
+    <div class="story-details">
+      <mat-icon>flag</mat-icon>
+      <span><strong>Epic:</strong> {{ story.epic.epicName }} </span>
+    </div>
+  </mat-card-content>
+
+  <mat-card-content class="comments-section">
+    <h4><mat-icon>task</mat-icon> Sub-Task</h4>
+
+  
+    <div *ngIf="subTasks.length > 0; else noSubTask">
+      <mat-list>
+        <mat-list-item *ngFor="let subTask of subTasks">
+          <h4 mat-line class="comments-section-comment">
+            {{ subTask.taskName }}
+            <!-- <button
+              (click)="deleteComment(subTask.taskId)"
+              style="margin-left: 50px"
+            >
+              <mat-icon>delete</mat-icon>
+            </button> -->
+          </h4>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <ng-template #noSubTask>
+      <p class="no-comments">No subtasks yet.</p>
+    </ng-template>
+    <mat-form-field class="comment-field" appearance="outline">
+      <mat-label>Add a SubTask</mat-label>
+      <textarea matInput [(ngModel)]="newSubTask"></textarea>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="AddSubTask(newSubTask)">
+      <mat-icon>send</mat-icon> Post SubTask
+    </button>
+  </mat-card-content>
+
+
+
+  <mat-card-content class="comments-section">
+    <h4><mat-icon>comment</mat-icon> Comments</h4>
+
+  
+    <div *ngIf="comments.length > 0; else noComments">
+      <mat-list>
+        <mat-list-item *ngFor="let comment of comments">
+          <h4 mat-line class="comments-section-comment">
+            {{ comment.comment }}
+            <!-- <button
+              (click)="deleteComment(comment.commentId)"
+              style="margin-left: 50px"
+            >
+              <mat-icon>delete</mat-icon>
+            </button> -->
+          </h4>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <ng-template #noComments>
+      <p class="no-comments">No comments yet. Be the first to comment!</p>
+    </ng-template>
+    <mat-form-field class="comment-field" appearance="outline">
+      <mat-label>Add a comment</mat-label>
+      <textarea matInput [(ngModel)]="newComment"></textarea>
+    </mat-form-field>
+    <button mat-raised-button color="accent" (click)="AddComment(newComment)">
+      <mat-icon>send</mat-icon> Post Comment
+    </button>
+  </mat-card-content>
+</mat-card>

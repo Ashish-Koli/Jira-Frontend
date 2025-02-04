@@ -1,0 +1,43 @@
+.project{
+    width: 300px;
+    height: 60px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 8px;
+}
+
+.main{
+    height: 100%;
+    width: 100%;
+}
+  
+p{
+    margin-left: 50px;
+    margin-top: 50px;
+    font-size: 40px;
+    font-weight: 400;
+}
+
+.project-table-container {
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+  
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  mat-form-field {
+    width: 300px;
+  }
+  mat-paginator{
+    margin-top: 10px;
+  }

@@ -1,0 +1,8 @@
+<h2>Project Details</h2>
+<div *ngIf="project">
+  <p><strong>ID:</strong> {{ project.projectId }}</p>
+  <p><strong>Name:</strong> {{ project.projectName }}</p>
+  <p><strong>Description:</strong> {{ project.projectDescription }}</p>
+</div>
+
+<button mat-button routerLink="/project">Back to Projects</button>

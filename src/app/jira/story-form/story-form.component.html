@@ -1,0 +1,162 @@
+<div class="main">
+  <h1>Story Form</h1>
+  <form [formGroup]="storyForm" class="form" (ngSubmit)="save()">
+    <mat-form-field appearance="outline" class="input">
+      <mat-label>Story Name</mat-label>
+      <input
+        matInput
+        formControlName="storyName"
+        title="story name"
+        placeholder="Enter a story name"
+      />
+      <mat-error *ngIf="storyForm.get('storyName')?.hasError('required')"
+        >story name is required</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="input">
+      <mat-label>Story Description</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        title="story description"
+        placeholder="Enter a story description"
+      ></textarea>
+      <mat-error *ngIf="storyForm.get('description')?.hasError('required')"
+        >story name is required</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="input">
+      <mat-label>Story Status</mat-label>
+      <mat-select formControlName="storyStatus">
+        <mat-option *ngFor="let status of storyStatus" [value]="status.id">
+          {{ status.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="storyForm.get('storyStatus')?.hasError('required')"
+        >story status is required</mat-error
+      >
+    </mat-form-field>
+
+    <!-- <mat-form-field appearance="outline" class="input">
+      <mat-select
+        multiple
+        class="custom-select"
+        formControlName="board"
+        placeholder="Add Board"
+      >
+        <mat-option *ngFor="let board of boards" [value]="board.boardId">{{
+          board.boardName
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="input">
+      <mat-select
+        multiple
+        class="custom-select"
+        formControlName="sprint"
+        placeholder="Add Sprint"
+      >
+        <mat-option *ngFor="let board of boards" [value]="board.boardId">{{
+          board.boardName
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field> -->
+    <!-- <mat-form-field appearance="fill">
+      <mat-label>Board</mat-label>
+      <mat-select formControlName="board">
+        <mat-option *ngFor="let board of boards" [value]="board.boardId">
+          {{ board.boardName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Sprint</mat-label>
+      <mat-select formControlName="sprint">
+        <mat-option *ngFor="let sprint of sprints" [value]="sprint.sprintId">
+          {{ sprint.sprintName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="input">
+      <mat-select
+        multiple
+        class="custom-select"
+        formControlName="epic"
+        placeholder="Add Epic"
+      >
+        <mat-option *ngFor="let board of boards" [value]="board.boardId">{{
+          board.boardName
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field> -->
+
+    <mat-form-field appearance="fill">
+      <mat-label>Project</mat-label>
+      <mat-select formControlName="project">
+        <mat-option
+          *ngFor="let project of projects"
+          [value]="project.projectId"
+        >
+          {{ project.projectName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Board Dropdown (Filtered by Project) -->
+    <mat-form-field appearance="fill">
+      <mat-label>Board</mat-label>
+      <mat-select formControlName="board">
+        <mat-option *ngFor="let board of boards" [value]="board.boardId">
+          {{ board.boardName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Sprint Dropdown (Filtered by Board) -->
+    <mat-form-field appearance="fill">
+      <mat-label>Sprint</mat-label>
+      <mat-select formControlName="sprint">
+        <mat-option *ngFor="let sprint of sprints" [value]="sprint.sprintId">
+          {{ sprint.sprintName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Epic Dropdown (Filtered by Project) -->
+    <mat-form-field appearance="fill">
+      <mat-label>Epic</mat-label>
+      <mat-select formControlName="epic">
+        <mat-option *ngFor="let epic of epics" [value]="epic.epicId">
+          {{ epic.epicName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- <mat-form-field appearance="outline" class="input">
+      <mat-select
+        multiple
+        class="custom-select"
+        formControlName="user"
+        placeholder="Add user"
+      >
+        <mat-option *ngFor="let board of boards" [value]="board.boardId">{{
+          board.boardName
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field> -->
+
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      [disabled]="storyForm.invalid"
+    >
+      {{ value }}
+    </button>
+  </form>
+</div>

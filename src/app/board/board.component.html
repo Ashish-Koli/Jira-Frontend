@@ -1,0 +1,73 @@
+<div class="main">
+  <p>Boards</p>
+  <div class="project-table-container">
+    <div class="table-header">
+      <mat-form-field appearance="outline">
+        <mat-label>Filter Boards</mat-label>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Search by name or status"
+        />
+      </mat-form-field>
+      <button
+        mat-fab
+        color="primary"
+        aria-label="Example icon button with a delete icon"
+        (click)="openForm()"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <!-- Project ID Column -->
+      <ng-container matColumnDef="boardId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let board">{{ board.boardId }}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="boardName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Board Name</th>
+        <td mat-cell *matCellDef="let board">{{ board.boardName }}</td>
+      </ng-container>
+
+      <!-- Description Column -->
+      <ng-container matColumnDef="project">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Project Name</th>
+        <td mat-cell *matCellDef="let board">{{ board.project }}</td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let board; let i; index">
+          <button
+            mat-button
+            color="primary"
+            (click)="openProjectForm(board, board.boardId)"
+          >
+            Edit
+          </button>
+          <button
+            mat-button
+            color="warn"
+            (click)="deleteProject(board.boardId)"
+          >
+            Delete
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Header and Row Declarations -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
+</div>

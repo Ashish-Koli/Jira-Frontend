@@ -1,0 +1,239 @@
+<!-- item.user.userId == userId -->
+<div class="mainn">
+  <h5>Project / board</h5>
+  <h1>Sprint</h1>
+  <button
+    mat-fab
+    (click)="open()"
+    style="align-self: flex-end; margin-right: 210px"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+  <div class="board">
+    <div class="column">
+      <h2>To do</h2>
+      <div
+        id="todo"
+        cdkDropList
+        #todoList="cdkDropList"
+        [cdkDropListData]="stories.ToDo"
+        [cdkDropListConnectedTo]="[doneList, inprogress, blockedList]"
+        class="task-list"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <ng-container *ngFor="let item of stories.ToDo">
+          <div class="task" cdkDrag [cdkDragDisabled]="!isAuthorized(item.user.userId)">
+            <mat-card class="story-card-todo">
+              <mat-card-header>
+                <mat-card-title>{{ item.storyName }}</mat-card-title>
+                <mat-card-subtitle
+                  >Epic: {{ item.epic.epicName }}</mat-card-subtitle
+                >
+              </mat-card-header>
+
+              <mat-card-content>
+                <p>{{ item.description }}</p>
+              </mat-card-content>
+
+              <mat-card-actions align="end">
+                <button
+                  mat-icon-button
+                  color="basic"
+                  (click)="story(item.storyId)"
+                >
+                  <mat-icon>visibility</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="primary"
+                  *ngIf="isAuthorized(item.user.userId)"
+                  (click)="edit(item, item.storyId)"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="warn"
+                  *ngIf="isAuthorized(item.user.userId)"
+                  (click)="delete(item.storyId)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="column">
+      <h2>Done</h2>
+      <div
+        id="done"
+        cdkDropList
+        class="task-list"
+        #doneList="cdkDropList"
+        [cdkDropListData]="stories.Done"
+        [cdkDropListConnectedTo]="[todoList, inprogress, blockedList]"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <!-- <div class="task" *ngFor="let item of stories.Done" cdkDrag> -->
+        <ng-container *ngFor="let item of stories.Done">
+          <div class="task" cdkDrag [cdkDragDisabled]="!isAuthorized(item.user.userId)">
+            <mat-card class="story-card-done">
+              <mat-card-header>
+                <mat-card-title>{{ item.storyName }}</mat-card-title>
+                <mat-card-subtitle
+                  >Epic: {{ item.epic.epicName }}</mat-card-subtitle
+                >
+              </mat-card-header>
+
+              <mat-card-content>
+                <p>{{ item.description }}</p>
+              </mat-card-content>
+
+              <mat-card-actions align="end">
+                <button
+                  mat-icon-button
+                  color="basic"
+                  (click)="story(item.storyId)"
+                >
+                  <mat-icon>visibility</mat-icon>
+                </button>
+                <button
+                  *ngIf="isAuthorized(item.user.userId)"
+                  mat-icon-button
+                  color="primary"
+                  (click)="edit(item, item.storyId)"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="warn"
+                  *ngIf="isAuthorized(item.user.userId)"
+                  (click)="delete(item.storyId)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="column">
+      <h2>Inprogress</h2>
+      <div
+        id="inprogress"
+        cdkDropList
+        #inprogress="cdkDropList"
+        [cdkDropListData]="stories.InProgress"
+        [cdkDropListConnectedTo]="[doneList, todoList, blockedList]"
+        class="task-list"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <!-- <div class="task" *ngFor="let item of stories.InProgress" cdkDrag> -->
+        <ng-container *ngFor="let item of stories.InProgress">
+          <div class="task" cdkDrag [cdkDragDisabled]="!isAuthorized(item.user.userId)">
+            <mat-card class="story-card-inprogress">
+              <mat-card-header>
+                <mat-card-title>{{ item.storyName }}</mat-card-title>
+                <mat-card-subtitle
+                  >Epic: {{ item.epic.epicName }}</mat-card-subtitle
+                >
+              </mat-card-header>
+
+              <mat-card-content>
+                <p>{{ item.description }}</p>
+              </mat-card-content>
+
+              <mat-card-actions align="end">
+                <button
+                  mat-icon-button
+                  color="basic"
+                  (click)="story(item.storyId)"
+                >
+                  <mat-icon>visibility</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="primary"
+                  *ngIf="isAuthorized(item.user.userId)"
+                  (click)="edit(item, item.storyId)"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="warn"
+                  *ngIf="isAuthorized(item.user.userId)"
+                  (click)="delete(item.storyId)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="column">
+      <h2>Blocked</h2>
+      <div
+        id="blocked"
+        cdkDropList
+        #blockedList="cdkDropList"
+        [cdkDropListData]="stories.Blocked"
+        [cdkDropListConnectedTo]="[doneList, todoList, inprogress]"
+        class="task-list"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <!-- <div class="task" *ngFor="let item of stories.Blocked" cdkDrag> -->
+        <ng-container *ngFor="let item of stories.Blocked" >
+          <div class="task" cdkDrag [cdkDragDisabled]="!isAuthorized(item.user.userId)">
+            <mat-card class="story-card-block">
+              <mat-card-header>
+                <mat-card-title>{{ item.storyName }}</mat-card-title>
+                <mat-card-subtitle
+                  >Epic: {{ item.epic.epicName }}</mat-card-subtitle
+                >
+              </mat-card-header>
+
+              <mat-card-content>
+                <p>{{ item.description }}</p>
+              </mat-card-content>
+
+              <mat-card-actions align="end">
+                <button
+                  mat-icon-button
+                  color="basic"
+                  *ngIf="isAuthorized(item.user.userId)"
+                  (click)="story(item.storyId)"
+                >
+                  <mat-icon>visibility</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="primary"
+                  *ngIf="isAuthorized(item.user.userId)"
+                  (click)="edit(item, item.storyId)"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="warn"
+                  *ngIf="isAuthorized(item.user.userId)"
+                  (click)="delete(item.storyId)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

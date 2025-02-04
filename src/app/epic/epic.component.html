@@ -1,0 +1,77 @@
+<div class="main">
+  <p>Epics</p>
+  <div class="project-table-container">
+    <div class="table-header">
+      <mat-form-field appearance="outline">
+        <mat-label>Filter Epics</mat-label>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Search by name or status"
+        />
+      </mat-form-field>
+      <button
+        mat-fab
+        color="primary"
+        aria-label="Example icon button with a delete icon"
+        (click)="open()"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <!-- Project ID Column -->
+      <ng-container matColumnDef="epicId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let epic; let i = index">{{ i + 1 }}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="epicName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Epic Name</th>
+        <td mat-cell *matCellDef="let epic">{{ epic.epicName }}</td>
+      </ng-container>
+
+      <!-- Description Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Epic Description
+        </th>
+        <td mat-cell *matCellDef="let epic">{{ epic.description }}</td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="project">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Project Name</th>
+        <td mat-cell *matCellDef="let epic">{{ epic.project }}</td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let epic; let i; index">
+          <button
+            mat-button
+            color="primary"
+            (click)="openProjectForm(epic, epic.epicId)"
+          >
+            Edit
+          </button>
+          <button mat-button color="warn" (click)="deleteProject(epic.epicId)">
+            Delete
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Header and Row Declarations -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="main">
+  <h1>Board Form</h1>
+  <form [formGroup]="boardForm" class="form" (ngSubmit)="save()">
+    <mat-form-field appearance="outline" class="input">
+      <mat-label>Board Name</mat-label>
+      <input
+        matInput
+        formControlName="boardName"
+        title="board name"
+        placeholder="Enter a board name"
+      />
+      <mat-error *ngIf="boardForm.get('boardName')?.hasError('required')"
+        >board name is required</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="input">
+      <mat-select
+        class="custom-select"
+        formControlName="project"
+        placeholder="select project"
+      >
+        <mat-option
+          *ngFor="let project of projects"
+          [value]="project.projectId"
+          >{{ project.projectName }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      [disabled]="boardForm.invalid"
+    >
+      {{ value }}
+    </button>
+  </form>
+</div>

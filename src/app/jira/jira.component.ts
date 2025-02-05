@@ -21,6 +21,9 @@ import { AuthService } from '../auth.service';
 })
 export class JiraComponent implements OnInit {
   id: any;
+  project!:string | null;
+  board!:string | null;
+  sprint!:string | null;
   userId!: number;
 
 
@@ -40,6 +43,9 @@ export class JiraComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe((data) => {
       this.id = data.get('id');
+      this.project = data.get('project');
+      this.board = data.get('board');
+      this.sprint = data.get('sprint');
       console.log('i will fetch projects of id:', this.id);
       this.fetchStories(this.id);
     });

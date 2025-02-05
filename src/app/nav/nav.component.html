@@ -71,7 +71,7 @@
           <ng-container *ngFor="let sprint of board.sprintList">
             <button
               mat-menu-item
-              [routerLink]="'/project/board/sprint/' +sprint.sprintId "
+              [routerLink]="'/'+project.projectName+'/'+board.boardName+'/'+sprint.sprintName+'/' +sprint.sprintId "
             >
               {{ sprint.sprintName }}
             </button>

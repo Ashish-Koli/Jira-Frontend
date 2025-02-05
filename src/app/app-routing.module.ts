@@ -19,7 +19,8 @@ const routes: Routes = [
     canActivate: [CanActivateAdmin],
   },
   {
-    path: 'project/board/sprint/:id',
+    // path: 'project/board/sprint/:id',
+    path: ':project/:board/:sprint/:id',
     loadChildren: () => import('./jira/jira.module').then((m) => m.JiraModule),
     canActivate: [CanActivate],
   },

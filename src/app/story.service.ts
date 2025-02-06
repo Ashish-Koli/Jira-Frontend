@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AddStory, UpdateStoryStatusDTO } from './dto/project';
+import {
+  AddComment,
+  AddStory,
+  AddSubTask,
+  BoardResponse,
+  UpdateStoryStatusDTO,
+} from './dto/project';
 
 @Injectable({
   providedIn: 'root',
@@ -33,11 +39,15 @@ export class StoryService {
     return this.http.delete<any>(`http://localhost:8080/story/delete/${id}`);
   }
 
-  updateStory(story:AddStory,id: number): Observable<any> {
-    return this.http.put<any>(`http://localhost:8080/story/update/${id}`, story);
+  updateStory(story: AddStory, id: number): Observable<any> {
+    return this.http.put<any>(
+      `http://localhost:8080/story/update/${id}`,
+      story
+    );
   }
-  getBoardsByUserId(id: number): Observable<any> {
-    return this.http.get<any>(
+
+  getBoardsByUserId(id: number): Observable<BoardResponse[]> {
+    return this.http.get<BoardResponse[]>(
       `http://localhost:8080/board/allBoards/user/${id}`
     );
   }
@@ -63,17 +73,14 @@ export class StoryService {
     );
   }
 
-  addComment(comment: any): Observable<any[]> {
+  addComment(comment: AddComment): Observable<any[]> {
     return this.http.post<any[]>(
       `http://localhost:8080/comments/create`,
       comment
     );
   }
-  addSubTask(task: any): Observable<any[]> {
-    return this.http.post<any[]>(
-      `http://localhost:8080/subTask/create`,
-      task
-    );
+  addSubTask(task: AddSubTask): Observable<any[]> {
+    return this.http.post<any[]>(`http://localhost:8080/subTask/create`, task);
   }
 
   deleteComment(id: number): Observable<any> {

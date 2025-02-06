@@ -25,16 +25,15 @@ export class EpicFormComponent implements OnInit {
     private fb: FormBuilder,
     private epicService: EpicService,
     private projectService: ProjectService,
-    private auth:AuthService,
+    private auth: AuthService,
     public dialogRef: MatDialogRef<BoardFromComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { editEpic: AddEpic, id: number }
+    @Inject(MAT_DIALOG_DATA) public data: { editEpic: AddEpic; id: number }
   ) {
-
     this.auth.userId$.subscribe((userId) => {
       this.userId = userId;
     });
 
-    projectService
+    this.projectService
       .getProjectNamesByUserId(this.userId)
       .subscribe((projectNameList: ProjectResponse[]) => {
         this.projects = projectNameList;

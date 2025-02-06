@@ -9,37 +9,19 @@ import { AddBoard, BoardResponse, EpicResponse } from './dto/project';
 export class BoardService {
   constructor(private http: HttpClient) {}
 
-  getAllEpic(): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:8080/epic/allEpic`).pipe(
-      map((result: any) => {
-        // console.log(result);
-        return result?.map((obj: EpicResponse) => {
-          // console.log(obj);
-          return {
-            epicId: obj.epicId,
-            epicName: obj.epicName,
-            description: obj.description,
-            project: obj.project,
-          };
-        });
-      })
-    );
-  }
-
   getAllBoardsByUserId(id: number): Observable<BoardResponse[]> {
     return this.http.get<any>(`http://localhost:8080/board/user/${id}`);
   }
 
-  getBoardById(id: number): Observable<any> {
-    return this.http.get<any>(`http://localhost:8080/board/${id}`);
+  createBoard(board: AddBoard): Observable<BoardResponse> {
+    return this.http.post<BoardResponse>(
+      `http://localhost:8080/board/create`,
+      board
+    );
   }
 
-  createBoard(board: AddBoard): Observable<any> {
-    return this.http.post<any>(`http://localhost:8080/board/create`, board);
-  }
-
-  updateBoard(board: AddBoard, id: number): Observable<any> {
-    return this.http.put<any>(
+  updateBoard(board: AddBoard, id: number): Observable<BoardResponse> {
+    return this.http.put<BoardResponse>(
       `http://localhost:8080/board/update/${id}`,
       board
     );

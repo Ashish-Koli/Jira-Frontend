@@ -9,22 +9,15 @@ import { BoardFromComponent } from './board-from/board-from.component';
 import { BoardService } from '../board.service';
 import { AddBoard, BoardResponse } from '../dto/project';
 
-export interface ProjectBackend {
-  projectId: number;
-  projectName: string;
-  projectDescription: string;
-}
-
 @Component({
   selector: 'app-user',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.css'],
 })
 export class BoardComponent implements OnInit {
-  userId: any;
-
-  displayedColumns: string[] = ['boardId', 'boardName', 'project', 'actions'];
-  dataSource = new MatTableDataSource<any>();
+  userId!: number;
+  displayedColumns = ['boardId', 'boardName', 'project', 'actions'];
+  dataSource = new MatTableDataSource<BoardResponse>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -72,7 +65,7 @@ export class BoardComponent implements OnInit {
       this.fetchBoards();
     });
   }
-  openProjectForm(board?: AddBoard, id?: any) {
+  openProjectForm(board: AddBoard, id: number) {
     const editBoard = board;
     const dialogRef = this.dialog.open(BoardFromComponent, {
       data: { editBoard: editBoard, id: id },

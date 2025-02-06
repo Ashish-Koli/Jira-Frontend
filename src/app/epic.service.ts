@@ -28,12 +28,18 @@ export class EpicService {
   //   return this.http.get<any>(`http://localhost:8080/epic/${id}`);
   // }
 
-  createEpic(epic: AddEpic): Observable<any> {
-    return this.http.post<any>(`http://localhost:8080/epic/create`, epic);
+  createEpic(epic: AddEpic): Observable<EpicResponse> {
+    return this.http.post<EpicResponse>(
+      `http://localhost:8080/epic/create`,
+      epic
+    );
   }
 
-  updateEpic(epic: AddEpic, id: number): Observable<any> {
-    return this.http.put<any>(`http://localhost:8080/epic/update/${id}`, epic);
+  updateEpic(epic: AddEpic, id: number): Observable<EpicResponse> {
+    return this.http.put<EpicResponse>(
+      `http://localhost:8080/epic/update/${id}`,
+      epic
+    );
   }
 
   deleteEpic(id: number): Observable<any> {

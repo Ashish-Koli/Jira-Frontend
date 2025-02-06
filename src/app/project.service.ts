@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { ProjectResponse } from './dto/project';
+import { AddProject, Project, ProjectResponse } from './dto/project';
 
 @Injectable({
   providedIn: 'root',
@@ -12,23 +12,26 @@ export class ProjectService {
   getProjectNamesByUserId(id: number): Observable<ProjectResponse[]> {
     return this.http.get<ProjectResponse[]>(
       `http://localhost:8080/project/projectNames/user/${id}`
-    )
+    );
   }
 
   getUsers(): Observable<any> {
     return this.http.get('http://localhost:8080/user/allUser');
   }
 
-  getAllProjectsByUserId(id: number): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:8080/project/user/${id}`);
+  getAllProjectsByUserId(id: number): Observable<Project[]> {
+    return this.http.get<Project[]>(`http://localhost:8080/project/user/${id}`);
   }
 
-  createProject(project: any): Observable<any> {
-    return this.http.post<any>(`http://localhost:8080/project/create`, project);
+  createProject(project: AddProject): Observable<Project> {
+    return this.http.post<Project>(
+      `http://localhost:8080/project/create`,
+      project
+    );
   }
 
-  updateProject(project: any, id: number): Observable<any> {
-    return this.http.put<any>(
+  updateProject(project: AddProject, id: number): Observable<Project> {
+    return this.http.put<Project>(
       `http://localhost:8080/project/update/${id}`,
       project
     );

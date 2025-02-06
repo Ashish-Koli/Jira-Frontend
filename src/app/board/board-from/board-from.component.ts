@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { AuthService } from 'src/app/auth.service';
 import { BoardService } from 'src/app/board.service';
-import { AddBoard } from 'src/app/dto/project';
+import { AddBoard, ProjectResponse } from 'src/app/dto/project';
 import { ProjectService } from 'src/app/project.service';
 
 @Component({
@@ -15,18 +16,25 @@ export class BoardFromComponent implements OnInit {
   editMode: boolean = false;
   currentIndex!: number;
   value: string = 'Add';
-  projects: any[] = [];
+  projects: ProjectResponse[] = [];
+  userId!: number;
 
   constructor(
     private fb: FormBuilder,
     private projectService: ProjectService,
     private boardService: BoardService,
+    private auth: AuthService,
     public dialogRef: MatDialogRef<BoardFromComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: { editBoard: AddBoard; id: number }
   ) {
-    projectService.getProjectNamesByUserId(1).subscribe((data) => {
-      this.projects = data;
+    this.auth.userId$.subscribe((userId) => {
+      this.userId = userId;
     });
+    this.projectService
+      .getProjectNamesByUserId(this.userId)
+      .subscribe((data) => {
+        this.projects = data;
+      });
   }
 
   ngOnInit(): void {

@@ -2,14 +2,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { BoardFromComponent } from '../../board/board-from/board-from.component';
-import { Epic } from '../epic.component';
 import { EpicService } from 'src/app/epic.service';
 import { ProjectService } from 'src/app/project.service';
 import { map } from 'rxjs';
-export interface ProjectNames {
-  projectId: number;
-  projectName: string;
-}
+import { AddEpic, ProjectResponse } from 'src/app/dto/project';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-epic-form',
@@ -20,30 +17,26 @@ export class EpicFormComponent implements OnInit {
   editMode: boolean = false;
   currentIndex!: number;
   value: string = 'Add';
-
-  projects: ProjectNames[] = [];
+  userId!: number;
+  projects: ProjectResponse[] = [];
 
   epicForm!: FormGroup;
   constructor(
     private fb: FormBuilder,
     private epicService: EpicService,
     private projectService: ProjectService,
+    private auth:AuthService,
     public dialogRef: MatDialogRef<BoardFromComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: { editEpic: AddEpic, id: number }
   ) {
+
+    this.auth.userId$.subscribe((userId) => {
+      this.userId = userId;
+    });
+
     projectService
-      .getProjectNamesByUserId(1)
-      .pipe(
-        map((data: any) => {
-          return data?.map((obj: ProjectNames) => {
-            return {
-              projectId: obj.projectId,
-              projectName: obj.projectName,
-            };
-          });
-        })
-      )
-      .subscribe((projectNameList: ProjectNames[]) => {
+      .getProjectNamesByUserId(this.userId)
+      .subscribe((projectNameList: ProjectResponse[]) => {
         this.projects = projectNameList;
       });
   }
@@ -65,7 +58,7 @@ export class EpicFormComponent implements OnInit {
 
   save() {
     console.log(this.epicForm.value);
-    const epic: Epic = this.epicForm.value;
+    const epic: AddEpic = this.epicForm.value;
     if (this.editMode) {
       this.epicService
         .updateEpic(epic, this.currentIndex)

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { ProjectResponse } from './dto/project';
 
 @Injectable({
   providedIn: 'root',
@@ -8,8 +9,8 @@ import { map, Observable } from 'rxjs';
 export class ProjectService {
   constructor(private http: HttpClient) {}
 
-  getProjectNamesByUserId(id: number): Observable<any> {
-    return this.http.get<any>(
+  getProjectNamesByUserId(id: number): Observable<ProjectResponse[]> {
+    return this.http.get<ProjectResponse[]>(
       `http://localhost:8080/project/projectNames/user/${id}`
     )
   }

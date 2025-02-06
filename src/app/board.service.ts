@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Epic } from './epic/epic.component';
-import { AddBoard, BoardResponse } from './dto/project';
+import { AddBoard, BoardResponse, EpicResponse } from './dto/project';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +13,7 @@ export class BoardService {
     return this.http.get<any[]>(`http://localhost:8080/epic/allEpic`).pipe(
       map((result: any) => {
         // console.log(result);
-        return result?.map((obj: Epic) => {
+        return result?.map((obj: EpicResponse) => {
           // console.log(obj);
           return {
             epicId: obj.epicId,

@@ -6,12 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { EpicFormComponent } from './epic-form/epic-form.component';
 import { EpicService } from '../epic.service';
-export interface Epic {
-  epicId: number;
-  epicName: string;
-  description: string;
-  project: string;
-}
+import { AddEpic, EpicResponse } from '../dto/project';
 
 @Component({
   selector: 'app-epic',
@@ -27,7 +22,7 @@ export class EpicComponent implements OnInit {
     'project',
     'actions',
   ];
-  dataSource!: MatTableDataSource<Epic>;
+  dataSource!: MatTableDataSource<EpicResponse>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -37,7 +32,6 @@ export class EpicComponent implements OnInit {
     private auth: AuthService,
     private epicService: EpicService
   ) {
-    // this.dataSource = new MatTableDataSource(this.epics);
     this.auth.userId$.subscribe((userId) => {
       this.userId = userId;
     });
@@ -47,12 +41,12 @@ export class EpicComponent implements OnInit {
     this.fetchEpics();
   }
 
-  epics!: Epic[];
+  epics!: EpicResponse[];
 
   fetchEpics() {
     this.epicService
       .getAllEpicByUserId(this.userId)
-      .subscribe((data: Epic[]) => {
+      .subscribe((data: EpicResponse[]) => {
         this.epics = data;
         // console.log(data);
         this.dataSource = new MatTableDataSource(this.epics);
@@ -72,7 +66,7 @@ export class EpicComponent implements OnInit {
       this.fetchEpics();
     });
   }
-  openProjectForm(epic?: any, id?: any) {
+  openProjectForm(epic: AddEpic, id: number) {
     const editEpic = epic;
     console.log(id);
     const dialogRef = this.dialog.open(EpicFormComponent, {

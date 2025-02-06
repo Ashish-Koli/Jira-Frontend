@@ -7,16 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { map, retry } from 'rxjs';
 import { SprintFormComponent } from './sprint-form/sprint-form.component';
 import { SprintService } from '../sprint.service';
-import { SprintResponse } from '../dto/project';
-export interface Sprint {
-  sprintId: number;
-  sprintNo: number;
-  sprintName: string;
-  sprintPoint: number;
-  startDate: Date;
-  endDate: Date;
-  board: string;
-}
+import { AddSprint, SprintResponse } from '../dto/project';
 
 @Component({
   selector: 'app-sprint',
@@ -80,7 +71,7 @@ export class SprintComponent implements OnInit {
       this.fetchEpics();
     });
   }
-  openProjectForm(sprint: any, id: any) {
+  openProjectForm(sprint: AddSprint, id: any) {
     const editSprint = sprint;
     console.log(id);
     const dialogRef = this.dialog.open(SprintFormComponent, {

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Epic } from './epic/epic.component';
+import { AddEpic, EpicResponse } from './dto/project';
 
 @Injectable({
   providedIn: 'root',
@@ -12,9 +12,7 @@ export class EpicService {
   getAllEpicByUserId(id: number): Observable<any[]> {
     return this.http.get<any[]>(`http://localhost:8080/epic/user/${id}`).pipe(
       map((result: any) => {
-        // console.log(result);
-        return result?.map((obj: Epic) => {
-          // console.log(obj);
+        return result?.map((obj: EpicResponse) => {
           return {
             epicId: obj.epicId,
             epicName: obj.epicName,
@@ -25,17 +23,16 @@ export class EpicService {
       })
     );
   }
-  // http://localhost:8080/project/projectNames/user/1
 
-  getEpicById(id: number): Observable<any> {
-    return this.http.get<any>(`http://localhost:8080/epic/${id}`);
-  }
+  // getEpicById(id: number): Observable<any> {
+  //   return this.http.get<any>(`http://localhost:8080/epic/${id}`);
+  // }
 
-  createEpic(epic: any): Observable<any> {
+  createEpic(epic: AddEpic): Observable<any> {
     return this.http.post<any>(`http://localhost:8080/epic/create`, epic);
   }
 
-  updateEpic(epic: any, id: number): Observable<any> {
+  updateEpic(epic: AddEpic, id: number): Observable<any> {
     return this.http.put<any>(`http://localhost:8080/epic/update/${id}`, epic);
   }
 

@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Sprint } from '../sprint.component';
 import { SprintService } from 'src/app/sprint.service';
-import { BoardResponse } from 'src/app/dto/project';
+import { AddSprint, BoardResponse } from 'src/app/dto/project';
 import { BoardService } from 'src/app/board.service';
+import { AuthService } from 'src/app/auth.service';
 @Component({
   selector: 'app-sprint-form',
   templateUrl: './sprint-form.component.html',
@@ -16,15 +16,20 @@ export class SprintFormComponent implements OnInit {
   currentIndex!: number;
   value: string = 'Add';
   boards: BoardResponse[] = [];
+  userId!: number;
 
   constructor(
     private fb: FormBuilder,
     private sprintService: SprintService,
     private boardService: BoardService,
+    private auth:AuthService,
     public dialogRef: MatDialogRef<SprintFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    boardService.getAllBoardsByUserId(1).subscribe((data) => {
+    this.auth.userId$.subscribe((userId) => {
+      this.userId = userId;
+    });
+    boardService.getAllBoardsByUserId(this.userId).subscribe((data) => {
       this.boards = data;
     });
   }
@@ -48,7 +53,7 @@ export class SprintFormComponent implements OnInit {
   }
   save() {
     console.log(this.sprintForm.value);
-    const sprint: Sprint = this.sprintForm.value;
+    const sprint: AddSprint = this.sprintForm.value;
     if (this.editMode) {
       this.sprintService
         .updateSprint(sprint, this.currentIndex)

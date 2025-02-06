@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Sprint } from './sprint/sprint.component';
+import { AddSprint, SprintResponse } from './dto/project';
 
 @Injectable({
   providedIn: 'root',
@@ -9,28 +9,10 @@ import { Sprint } from './sprint/sprint.component';
 export class SprintService {
   constructor(private http: HttpClient) {}
 
-  getBoardsByProjectId(id: number): Observable<any> {
-    return this.http.get<any>(`http://localhost:8080/board/project/${id}`).pipe(
-      map((result: any) => {
-        return result?.map((obj: any) => {
-          return {
-            boardId: obj.boardId,
-            boardName: obj.boardName,
-            sprintList: obj.sprintList,
-          };
-        });
-      })
-    );
-  }
-
-
-  // -------------------------------------------------------------------------------------------------------------------------------------------
   getAllSprintByUserId(id: number): Observable<any[]> {
     return this.http.get<any[]>(`http://localhost:8080/sprint/user/${id}`).pipe(
       map((result: any) => {
-        // console.log(result);
-        return result?.map((obj: Sprint) => {
-          // console.log(obj);
+        return result?.map((obj: SprintResponse) => {
           return {
             sprintId: obj.sprintId,
             sprintNo: obj.sprintNo,
@@ -45,14 +27,12 @@ export class SprintService {
     );
   }
 
-
-
-  createSprint(sprint: any): Observable<any> {
-    return this.http.post<any>(`http://localhost:8080/sprint/create`, sprint);
+  createSprint(sprint: AddSprint): Observable<AddSprint> {
+    return this.http.post<AddSprint>(`http://localhost:8080/sprint/create`, sprint);
   }
 
-  updateSprint(sprint: any, id: number): Observable<any> {
-    return this.http.put<any>(
+  updateSprint(sprint: AddSprint, id: number): Observable<AddSprint> {
+    return this.http.put<AddSprint>(
       `http://localhost:8080/sprint/update/${id}`,
       sprint
     );

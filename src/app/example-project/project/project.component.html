@@ -60,7 +60,7 @@
 
 
 <div class="main">  
-  <p>Projects</p>
+  <p><img src="./../../assets/project.png" alt="Logo" class="icon"/> Projects</p>
   <div class="project-table-container ">
       <div class="table-header">
         
@@ -81,8 +81,8 @@
       <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
         <!-- Project ID Column -->
         <ng-container matColumnDef="projectId">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-          <td mat-cell *matCellDef="let project; let i = index">{{ i }}</td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Sr.No</th>
+          <td mat-cell *matCellDef="let project; let i = index">{{ i+1}}</td>
         </ng-container>
     
         <!-- Name Column -->

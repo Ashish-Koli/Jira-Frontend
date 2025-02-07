@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { pipe } from 'rxjs';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private snackbar:MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -68,6 +70,8 @@ export class LoginComponent implements OnInit {
         // console.error('Error handler:', error.msg);
         // console.log('hey');
         console.log("hahahahahhahhahah");
+        this.snackbar.open(error.error.message, "cancel")
+        console.log(error.error.message);
       }
     );
   }

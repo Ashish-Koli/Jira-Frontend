@@ -14,10 +14,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import {
   HTTP_INTERCEPTORS,
-  HttpClient,
   HttpClientModule,
 } from '@angular/common/http';
-import { AuthService } from './auth.service';
+
 import { MatRippleModule } from '@angular/material/core';
 import { NavComponent } from './nav/nav.component';
 import { MatMenuModule } from '@angular/material/menu';
@@ -26,10 +25,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
-import { BoardComponent } from './board/board.component';
-import { BoardFromComponent } from './board/board-from/board-from.component';
-import { SprintComponent } from './sprint/sprint.component';
-import { SprintFormComponent } from './sprint/sprint-form/sprint-form.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -37,6 +32,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AuthInterceptor } from './auth.interceptor';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
 
 @NgModule({
   declarations: [
@@ -73,6 +70,8 @@ import { AuthInterceptor } from './auth.interceptor';
     MatListModule,
     DragDropModule,
     MatMenuModule,
+    MatSnackBarModule
+    
   ],
   providers: [
     {

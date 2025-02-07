@@ -9,6 +9,10 @@
     margin: 8px;
 }
 
+.icon{
+  height: 35px;
+}
+
 .main{
     height: 100%;
     width: 100%;
@@ -17,7 +21,7 @@
 p{
     margin-left: 50px;
     margin-top: 50px;
-    font-size: 40px;
+    font-size: 50px;
     font-weight: 400;
 }
 

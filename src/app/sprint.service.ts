@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { AddSprint, SprintResponse } from './dto/project';
+import { AddRelease, AddSprint, SprintResponse } from './dto/project';
 
 @Injectable({
   providedIn: 'root',
@@ -21,18 +21,23 @@ export class SprintService {
             startDate: obj.startDate,
             endDate: obj.endDate,
             board: obj.board,
+            releaseId: obj.releaseId,
+            releaseName: obj.releaseName,
           };
         });
       })
     );
   }
 
-  createSprint(sprint: AddSprint): Observable<AddSprint> {
-    return this.http.post<AddSprint>(`http://localhost:8080/sprint/create`, sprint);
+  createSprint(sprint: AddSprint): Observable<SprintResponse> {
+    return this.http.post<SprintResponse>(
+      `http://localhost:8080/sprint/create`,
+      sprint
+    );
   }
 
-  updateSprint(sprint: AddSprint, id: number): Observable<AddSprint> {
-    return this.http.put<AddSprint>(
+  updateSprint(sprint: AddSprint, id: number): Observable<SprintResponse> {
+    return this.http.put<SprintResponse>(
       `http://localhost:8080/sprint/update/${id}`,
       sprint
     );
@@ -40,5 +45,13 @@ export class SprintService {
 
   deleteSprint(id: number): Observable<any> {
     return this.http.delete<any>(`http://localhost:8080/sprint/delete/${id}`);
+  }
+
+  createRelease(release: AddRelease): Observable<any> {
+    return this.http.post<any>(`http://localhost:8080/release/create`, release);
+  }
+
+  updateRelease(release: AddRelease): Observable<any> {
+    return this.http.put<any>(`http://localhost:8080/release/update`, release);
   }
 }

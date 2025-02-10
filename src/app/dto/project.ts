@@ -12,7 +12,6 @@ export interface Project {
   userList: { userId: number; userName: string }[];
 }
 
-
 export interface GetUser {
   userId: number;
   userName: string;
@@ -71,6 +70,8 @@ export interface SprintResponse {
   startDate: Date;
   endDate: Date;
   board: string;
+  releaseId: number;
+  releaseName: string;
 }
 
 export interface AddEpic {

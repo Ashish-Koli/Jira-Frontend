@@ -71,6 +71,19 @@
       </mat-select>
     </mat-form-field>
 
+    <mat-form-field appearance="outline" class="input">
+      <mat-label>Release Name</mat-label>
+      <input
+        matInput
+        formControlName="releaseName"
+        title="release name"
+        placeholder="Enter the release name"
+      />
+      <mat-error *ngIf="sprintForm.get('releaseName')?.hasError('required')"
+        >release name is required</mat-error
+      >
+    </mat-form-field>
+
     <button type="submit" mat-raised-button color="primary">
       {{ value }}
     </button>

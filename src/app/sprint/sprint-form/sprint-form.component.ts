@@ -2,7 +2,12 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SprintService } from 'src/app/sprint.service';
-import { AddSprint, BoardResponse } from 'src/app/dto/project';
+import {
+  AddRelease,
+  AddSprint,
+  BoardResponse,
+  SprintResponse,
+} from 'src/app/dto/project';
 import { BoardService } from 'src/app/board.service';
 import { AuthService } from 'src/app/auth.service';
 @Component({
@@ -22,7 +27,7 @@ export class SprintFormComponent implements OnInit {
     private fb: FormBuilder,
     private sprintService: SprintService,
     private boardService: BoardService,
-    private auth:AuthService,
+    private auth: AuthService,
     public dialogRef: MatDialogRef<SprintFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -42,6 +47,7 @@ export class SprintFormComponent implements OnInit {
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
       board: ['', [Validators.required]],
+      releaseName: ['', [Validators.required]],
     });
 
     if (this.data !== null) {
@@ -52,16 +58,37 @@ export class SprintFormComponent implements OnInit {
     }
   }
   save() {
-    console.log(this.sprintForm.value);
-    const sprint: AddSprint = this.sprintForm.value;
+    const sprint: AddSprint = {
+      sprintNo: this.sprintForm.value.sprintNo,
+      sprintName: this.sprintForm.value.sprintName,
+      sprintPoint: this.sprintForm.value.sprintPoint,
+      startDate: this.sprintForm.value.startDate,
+      endDate: this.sprintForm.value.endDate,
+      board: this.sprintForm.value.board,
+    };
+
     if (this.editMode) {
       this.sprintService
         .updateSprint(sprint, this.currentIndex)
-        .subscribe(() => this.dialogRef.close(true));
+        .subscribe((data) => {
+          const release: AddRelease = {
+            sprint: data.sprintId,
+            releaseName: this.sprintForm.value.releaseName,
+          };
+          this.sprintService
+            .updateRelease(release)
+            .subscribe(() => this.dialogRef.close(true));
+        });
     } else {
-      this.sprintService
-        .createSprint(sprint)
-        .subscribe(() => this.dialogRef.close(true));
+      this.sprintService.createSprint(sprint).subscribe((data) => {
+        const release: AddRelease = {
+          sprint: data.sprintId,
+          releaseName: this.sprintForm.value.releaseName,
+        };
+        this.sprintService
+          .createRelease(release)
+          .subscribe(() => this.dialogRef.close(true));
+      });
     }
   }
 }

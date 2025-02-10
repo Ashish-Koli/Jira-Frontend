@@ -25,6 +25,7 @@ export class SprintComponent implements OnInit {
     'startDate',
     'endDate',
     'board',
+    'releaseName',
     'actions',
   ];
   dataSource!: MatTableDataSource<SprintResponse>;
@@ -74,6 +75,7 @@ export class SprintComponent implements OnInit {
   openProjectForm(sprint: AddSprint, id: any) {
     const editSprint = sprint;
     console.log(id);
+    console.log(editSprint);
     const dialogRef = this.dialog.open(SprintFormComponent, {
       data: { editSprint: editSprint, id: id },
     });

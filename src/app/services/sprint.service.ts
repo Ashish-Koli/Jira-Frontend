@@ -9,25 +9,8 @@ import { AddRelease, AddSprint, SprintResponse } from '../dto/project';
 export class SprintService {
   constructor(private http: HttpClient) {}
 
-  getAllSprintByUserId(id: number): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:8080/sprint/user/${id}`).pipe(
-      map((result: any) => {
-        return result?.map((obj: SprintResponse) => {
-          return {
-            sprintId: obj.sprintId,
-            sprintNo: obj.sprintNo,
-            sprintName: obj.sprintName,
-            sprintPoint: obj.sprintPoint,
-            startDate: obj.startDate,
-            endDate: obj.endDate,
-            boardId:obj.boardId,
-            board: obj.board,
-            releaseId: obj.releaseId,
-            releaseName: obj.releaseName,
-          };
-        });
-      })
-    );
+  getAllSprintByUserId(id: number): Observable<SprintResponse[]> {
+    return this.http.get<SprintResponse[]>(`http://localhost:8080/sprint/user/${id}`)
   }
 
   createSprint(sprint: AddSprint): Observable<SprintResponse> {
@@ -44,8 +27,8 @@ export class SprintService {
     );
   }
 
-  deleteSprint(id: number): Observable<any> {
-    return this.http.delete<any>(`http://localhost:8080/sprint/delete/${id}`);
+  deleteSprint(id: number): Observable<void> {
+    return this.http.delete<void>(`http://localhost:8080/sprint/delete/${id}`);
   }
 
   createRelease(release: AddRelease): Observable<any> {

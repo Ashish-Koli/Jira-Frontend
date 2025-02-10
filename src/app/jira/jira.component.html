@@ -1,6 +1,6 @@
 <!-- item.user.userId == userId -->
 <div class="mainn">
-  <h5>{{project}} / {{board}}</h5>
+  <h4>{{project}} / {{board}}</h4>
   <h1>{{sprint}}</h1>
   <button
     mat-fab
@@ -23,7 +23,7 @@
       >
         <ng-container *ngFor="let item of stories.ToDo">
           <div class="task" cdkDrag [cdkDragDisabled]="!isAuthorized(item.user.userId)">
-            <mat-card class="story-card-todo">
+            <mat-card class="story-card-todo mat-elevation-z50">
               <mat-card-header>
                 <mat-card-title>{{ item.storyName }}</mat-card-title>
                 <mat-card-subtitle
@@ -79,7 +79,7 @@
         <!-- <div class="task" *ngFor="let item of stories.Done" cdkDrag> -->
         <ng-container *ngFor="let item of stories.Done">
           <div class="task" cdkDrag [cdkDragDisabled]="!isAuthorized(item.user.userId)">
-            <mat-card class="story-card-done">
+            <mat-card class="story-card-done ">
               <mat-card-header>
                 <mat-card-title>{{ item.storyName }}</mat-card-title>
                 <mat-card-subtitle

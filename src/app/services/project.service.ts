@@ -38,7 +38,7 @@ export class ProjectService {
     );
   }
 
-  deleteProject(id: number): Observable<any> {
-    return this.http.delete<any>(`http://localhost:8080/project/delete/${id}`);
+  deleteProject(id: number): Observable<void> {
+    return this.http.delete<void>(`http://localhost:8080/project/delete/${id}`);
   }
 }

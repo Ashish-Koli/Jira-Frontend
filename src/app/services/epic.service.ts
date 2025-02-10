@@ -9,25 +9,11 @@ import { AddEpic, EpicResponse } from '../dto/project';
 export class EpicService {
   constructor(private http: HttpClient) {}
 
-  getAllEpicByUserId(id: number): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:8080/epic/user/${id}`).pipe(
-      map((result: any) => {
-        return result?.map((obj: EpicResponse) => {
-          return {
-            epicId: obj.epicId,
-            epicName: obj.epicName,
-            description: obj.description,
-            projectId: obj.projectId,
-            project: obj.project,
-          };
-        });
-      })
-    );
+  getAllEpicByUserId(id: number): Observable<EpicResponse[]> {
+    return this.http.get<EpicResponse[]>(`http://localhost:8080/epic/user/${id}`)
+  
   }
 
-  // getEpicById(id: number): Observable<any> {
-  //   return this.http.get<any>(`http://localhost:8080/epic/${id}`);
-  // }
 
   createEpic(epic: AddEpic): Observable<EpicResponse> {
     return this.http.post<EpicResponse>(
@@ -43,7 +29,7 @@ export class EpicService {
     );
   }
 
-  deleteEpic(id: number): Observable<any> {
-    return this.http.delete<any>(`http://localhost:8080/epic/delete/${id}`);
+  deleteEpic(id: number): Observable<void> {
+    return this.http.delete<void>(`http://localhost:8080/epic/delete/${id}`);
   }
 }

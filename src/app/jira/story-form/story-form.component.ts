@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AuthService } from 'src/app/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { AddStory } from 'src/app/dto/project';
-import { ProjectService } from 'src/app/project.service';
-import { SprintService } from 'src/app/sprint.service';
-import { StoryService } from 'src/app/story.service';
+import { ProjectService } from 'src/app/services/project.service';
+import { SprintService } from 'src/app/services/sprint.service';
+import { StoryService } from 'src/app/services/story.service';
 
 @Component({
   selector: 'app-story-form',

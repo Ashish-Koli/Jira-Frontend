@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { map } from 'rxjs';
-import { ProjectService } from 'src/app/project.service';
+import { ProjectService } from 'src/app/services/project.service';
 export interface User {
   userId: number;
   userName: string;
@@ -71,10 +71,8 @@ export class ProjectFormComponent implements OnInit {
     if (this.data !== null) {
       this.editMode = true;
       this.value = 'Edit';
-      this.currentId = this.data.id;
-      console.log(this.data.editProject.userList);
+      this.currentId = this.data.id;     
       this.projectForm.patchValue(this.data.editProject);
-      
     }
   }
   save() {

@@ -5,6 +5,13 @@ export interface AddUser {
   role: number;
 }
 
+export interface AddUser {
+  userId:number;
+  userName: string;
+  email: string;
+  password: string;
+}
+
 export interface Project {
   projectId: number;
   projectName: string;
@@ -44,12 +51,18 @@ export interface ProjectResponse {
 
 export interface AddBoard {
   boardName: string;
-  projectId: number;
+  project: number;
+}
+
+export interface EditBoard {
+  boardName: string;
+  project: number;
 }
 
 export interface BoardResponse {
   boardId: number;
   boardName: string;
+  projectId:number;
   project: string;
 }
 
@@ -62,6 +75,16 @@ export interface AddSprint {
   board: number;
 }
 
+export interface EditSprint {
+  sprintNo: string;
+  sprintName: string;
+  sprintPoint: number;
+  startDate: Date;
+  endDate: Date;
+  board: number;
+  releaseName:string;
+}
+
 export interface SprintResponse {
   sprintId: number;
   sprintNo: string;
@@ -69,6 +92,7 @@ export interface SprintResponse {
   sprintPoint: number;
   startDate: Date;
   endDate: Date;
+  boardId:number;
   board: string;
   releaseId: number;
   releaseName: string;
@@ -84,6 +108,7 @@ export interface EpicResponse {
   epicId: number;
   epicName: string;
   description: string;
+  projectId:number;
   project: string;
 }
 

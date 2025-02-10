@@ -2,11 +2,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { BoardFromComponent } from '../../board/board-from/board-from.component';
-import { EpicService } from 'src/app/epic.service';
-import { ProjectService } from 'src/app/project.service';
+import { EpicService } from 'src/app/services/epic.service';
+import { ProjectService } from 'src/app/services/project.service';
 import { map } from 'rxjs';
 import { AddEpic, ProjectResponse } from 'src/app/dto/project';
-import { AuthService } from 'src/app/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-epic-form',

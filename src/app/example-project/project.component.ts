@@ -3,10 +3,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
-import { ProjectFormComponent } from '../project-form/project-form.component';
-import { ProjectService } from 'src/app/project.service';
-import { AuthService } from 'src/app/auth.service';
-import { Project } from 'src/app/dto/project';
+import { ProjectFormComponent, User } from './project-form/project-form.component';
+import { ProjectService } from 'src/app/services/project.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { AddProject, Project } from 'src/app/dto/project';
+import { EventService } from '../services/event.service';
 
 @Component({
   selector: 'app-project',
@@ -29,7 +30,8 @@ export class ProjectComponent implements OnInit {
   constructor(
     private projectService: ProjectService,
     private dialog: MatDialog,
-    private auth: AuthService
+    private auth: AuthService,
+    private udpateEvent:EventService
   ) {
     this.auth.userId$.subscribe((userId) => {
       this.userId = userId;
@@ -65,24 +67,35 @@ export class ProjectComponent implements OnInit {
     const dialogRef = this.dialog.open(ProjectFormComponent);
     dialogRef.afterClosed().subscribe(() => {
       this.fetchProjects();
+      this.udpateEvent.update();
+
     });
   }
-  openProjectForm(project: Project, id: any) {
+  openProjectForm(project: AddProject, id: number) {
   
-    const editProject:Project = project;
-    console.log(editProject);
+    const editProject:AddProject = {
+      projectName:project.projectName,
+      projectDescription:project.projectDescription,
+      userList:project.userList.map((user:any)=>{
+        return user.userId;
+      })
+    };
+
     const dialogRef = this.dialog.open(ProjectFormComponent, {
       data: { editProject: editProject, id: id },
     });
 
     dialogRef.afterClosed().subscribe(() => {
       this.fetchProjects();
+      this.udpateEvent.update();
     });
   }
 
   deleteProject(projectId: number) {
     this.projectService.deleteProject(projectId).subscribe(() => {
       this.fetchProjects();
+      this.udpateEvent.update();
+
     });
   }
 }

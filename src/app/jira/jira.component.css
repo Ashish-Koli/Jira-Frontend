@@ -146,7 +146,7 @@
   h2{
     margin-left: 10px;
   }
-  h5{
+  h4{
     align-self: flex-start;
     margin-left: 220px;
     margin-top: 30px;
@@ -167,13 +167,6 @@
   }
    
   /* .task {
-    background: #fff;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    cursor: grab;
-    height: 120px;
   } */
   .taskk{
     height: 100%;

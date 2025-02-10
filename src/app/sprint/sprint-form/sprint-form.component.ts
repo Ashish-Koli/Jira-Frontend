@@ -1,15 +1,15 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { SprintService } from 'src/app/sprint.service';
+import { SprintService } from 'src/app/services/sprint.service';
 import {
   AddRelease,
   AddSprint,
   BoardResponse,
   SprintResponse,
 } from 'src/app/dto/project';
-import { BoardService } from 'src/app/board.service';
-import { AuthService } from 'src/app/auth.service';
+import { BoardService } from 'src/app/services/board.service';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-sprint-form',
   templateUrl: './sprint-form.component.html',

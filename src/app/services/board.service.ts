@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { AddBoard, BoardResponse, EpicResponse } from './dto/project';
+import { AddBoard, BoardResponse, EpicResponse } from '../dto/project';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +10,7 @@ export class BoardService {
   constructor(private http: HttpClient) {}
 
   getAllBoardsByUserId(id: number): Observable<BoardResponse[]> {
-    return this.http.get<any>(`http://localhost:8080/board/user/${id}`);
+    return this.http.get<BoardResponse[]>(`http://localhost:8080/board/user/${id}`);
   }
 
   createBoard(board: AddBoard): Observable<BoardResponse> {
@@ -27,7 +27,7 @@ export class BoardService {
     );
   }
 
-  deleteBoard(id: number): Observable<any> {
-    return this.http.delete<any>(`http://localhost:8080/board/delete/${id}`);
+  deleteBoard(id: number): Observable<void> {
+    return this.http.delete<void>(`http://localhost:8080/board/delete/${id}`);
   }
 }

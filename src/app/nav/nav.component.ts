@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
-import { ProjectService } from '../project.service';
-import { SharedService } from '../shared.service';
+import { AuthService } from '../services/auth.service';
+import { ProjectService } from '../services/project.service';
+import { SharedService } from '../services/shared.service';
 import { Router } from '@angular/router';
+import { EventService } from '../services/event.service';
 
 @Component({
   selector: 'app-nav',
@@ -13,11 +14,13 @@ export class NavComponent implements OnInit {
   isAuthenticated!: boolean;
   role!: string;
   userId!: number;
+  projects: any[] = [];
 
   constructor(
     private auth: AuthService,
     private projectService: ProjectService,
     private sharedService: SharedService,
+    private updateEvent:EventService,
     private router: Router
   ) {
     this.auth.userId$.subscribe((userId) => {
@@ -28,9 +31,17 @@ export class NavComponent implements OnInit {
           .getAllProjectsByUserId(this.userId)
           .subscribe((data) => {
             this.projects = data;
-            console.log(this.projects[0].boardList[0].sprintList[0].sprintId);
           });
       }
+      this.updateEvent.updateEvent.subscribe(()=>{
+        if (this.isAuthenticated) {
+          this.projectService
+            .getAllProjectsByUserId(this.userId)
+            .subscribe((data) => {
+              this.projects = data;
+            });
+        }
+      }) 
     });
 
     this.auth.role$.subscribe((role) => {
@@ -45,7 +56,7 @@ export class NavComponent implements OnInit {
     this.auth.logout();
   }
 
-  projects: any[] = [];
+
 
   ngOnInit(): void {
     this.auth.userId$.subscribe((userId) => {

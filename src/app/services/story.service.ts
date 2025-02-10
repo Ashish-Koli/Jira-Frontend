@@ -7,7 +7,7 @@ import {
   AddSubTask,
   BoardResponse,
   UpdateStoryStatusDTO,
-} from './dto/project';
+} from '../dto/project';
 
 @Injectable({
   providedIn: 'root',

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { CanActivate, CanActivateAdmin } from './auth-gaurd';
+import { CanActivate, CanActivateAdmin } from './auth/auth-gaurd';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },

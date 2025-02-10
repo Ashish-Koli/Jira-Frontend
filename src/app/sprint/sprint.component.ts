@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { map, retry } from 'rxjs';
 import { SprintFormComponent } from './sprint-form/sprint-form.component';
-import { SprintService } from '../sprint.service';
-import { AddSprint, SprintResponse } from '../dto/project';
+import { SprintService } from '../services/sprint.service';
+import { AddSprint, EditSprint, SprintResponse } from '../dto/project';
+import { EventService } from '../services/event.service';
 
 @Component({
   selector: 'app-sprint',
@@ -36,7 +37,8 @@ export class SprintComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private auth: AuthService,
-    private sprintService: SprintService
+    private sprintService: SprintService,
+    private udpateEvent:EventService
   ) {
     this.auth.userId$.subscribe((userId) => {
       this.userId = userId;
@@ -70,23 +72,36 @@ export class SprintComponent implements OnInit {
     const dialogRef = this.dialog.open(SprintFormComponent);
     dialogRef.afterClosed().subscribe(() => {
       this.fetchEpics();
+      this.udpateEvent.update();
+
     });
   }
-  openProjectForm(sprint: AddSprint, id: any) {
-    const editSprint = sprint;
-    console.log(id);
+  openProjectForm(sprint: SprintResponse, id: any) {
+    const editSprint:EditSprint = {
+      sprintNo: sprint.sprintNo,
+      sprintName: sprint.sprintName,
+      sprintPoint: sprint.sprintPoint,
+      startDate: sprint.startDate,
+      endDate: sprint.endDate,
+      board: sprint.boardId,
+      releaseName:sprint.releaseName,
+    };
     console.log(editSprint);
     const dialogRef = this.dialog.open(SprintFormComponent, {
       data: { editSprint: editSprint, id: id },
     });
     dialogRef.afterClosed().subscribe(() => {
       this.fetchEpics();
+      this.udpateEvent.update();
+
     });
   }
 
   deleteSprint(sprintId: number) {
     this.sprintService.deleteSprint(sprintId).subscribe(() => {
       this.fetchEpics();
+      this.udpateEvent.update();
+
     });
   }
 }

@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { EpicFormComponent } from './epic-form/epic-form.component';
-import { EpicService } from '../epic.service';
+import { EpicService } from '../services/epic.service';
 import { AddEpic, EpicResponse } from '../dto/project';
+import { EventService } from '../services/event.service';
 
 @Component({
   selector: 'app-epic',
@@ -30,7 +31,9 @@ export class EpicComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private auth: AuthService,
-    private epicService: EpicService
+    private epicService: EpicService,
+    private udpateEvent:EventService
+    
   ) {
     this.auth.userId$.subscribe((userId) => {
       this.userId = userId;
@@ -64,23 +67,34 @@ export class EpicComponent implements OnInit {
     const dialogRef = this.dialog.open(EpicFormComponent);
     dialogRef.afterClosed().subscribe(() => {
       this.fetchEpics();
+      this.udpateEvent.update();
+
     });
   }
-  openProjectForm(epic: AddEpic, id: number) {
-    const editEpic = epic;
-    console.log(id);
+  openProjectForm(epic: EpicResponse, id: number) {
+    const editEpic:AddEpic = {
+      epicName:epic.epicName,
+      description:epic.description,
+      project:epic.projectId
+    };
+    console.log(epic);
+    console.log(editEpic);
     const dialogRef = this.dialog.open(EpicFormComponent, {
       data: { editEpic: editEpic, id: id },
     });
 
     dialogRef.afterClosed().subscribe(() => {
       this.fetchEpics();
+      this.udpateEvent.update();
+
     });
   }
 
   deleteProject(epicId: number) {
     this.epicService.deleteEpic(epicId).subscribe(() => {
       this.fetchEpics();
+      this.udpateEvent.update();
+
     });
   }
 }

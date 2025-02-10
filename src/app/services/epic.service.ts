@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { AddEpic, EpicResponse } from './dto/project';
+import { AddEpic, EpicResponse } from '../dto/project';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +17,7 @@ export class EpicService {
             epicId: obj.epicId,
             epicName: obj.epicName,
             description: obj.description,
+            projectId: obj.projectId,
             project: obj.project,
           };
         });

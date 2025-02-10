@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { AddProject, Project, ProjectResponse } from './dto/project';
+import { AddProject, Project, ProjectResponse } from '../dto/project';
+import { User } from '../example-project/project-form/project-form.component';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +16,8 @@ export class ProjectService {
     );
   }
 
-  getUsers(): Observable<any> {
-    return this.http.get('http://localhost:8080/user/allUser');
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>('http://localhost:8080/user/allUser');
   }
 
   getAllProjectsByUserId(id: number): Observable<Project[]> {

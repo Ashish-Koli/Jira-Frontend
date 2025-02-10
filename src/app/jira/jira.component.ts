@@ -4,15 +4,15 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
-import { SharedService } from '../shared.service';
+import { SharedService } from '../services/shared.service';
 import { ActivatedRoute } from '@angular/router';
-import { JiraService } from '../jira.service';
-import { StoryService } from '../story.service';
+import { JiraService } from '../services/jira.service';
+import { StoryService } from '../services/story.service';
 import { AddStory, UpdateStoryStatusDTO } from '../dto/project';
 import { MatDialog } from '@angular/material/dialog';
 import { StoryFormComponent } from './story-form/story-form.component';
 import { StoryDetailsComponent } from './story-details/story-details.component';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-jira',
@@ -117,10 +117,11 @@ export class JiraComponent implements OnInit {
   }
 
   edit(story: any, id: number) {
+    console.log(story);
     const editStory = {
       storyName: story.storyName,
       description: story.description,
-      storyStatus: story.storyStatus.name,
+      storyStatus: story.storyStatus.id,
     };
     const dialogRef = this.dialog.open(StoryFormComponent, {
       data: { editStory: editStory, id: id },

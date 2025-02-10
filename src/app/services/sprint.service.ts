@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { AddRelease, AddSprint, SprintResponse } from './dto/project';
+import { AddRelease, AddSprint, SprintResponse } from '../dto/project';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +20,7 @@ export class SprintService {
             sprintPoint: obj.sprintPoint,
             startDate: obj.startDate,
             endDate: obj.endDate,
+            boardId:obj.boardId,
             board: obj.board,
             releaseId: obj.releaseId,
             releaseName: obj.releaseName,

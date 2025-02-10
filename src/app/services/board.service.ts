@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { AddBoard, BoardResponse, EpicResponse } from './dto/project';
+import { AddBoard, BoardResponse, EpicResponse } from '../dto/project';
 
 @Injectable({
   providedIn: 'root',

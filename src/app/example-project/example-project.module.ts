@@ -11,11 +11,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { ProjectDetailComponent } from './project-detail/project-detail.component';
 import { ProjectFormComponent } from './project-form/project-form.component';
 import { RouterModule } from '@angular/router';
-import { ProjectComponent } from './project/project.component';
-import { ProjectRoutingModule } from './project/example-project-routing.module';
+import { ProjectComponent } from './project.component';
+import { ProjectRoutingModule } from './example-project-routing.module';
 import { MatOptionModule } from '@angular/material/core';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -36,7 +35,6 @@ import { MatMenuModule } from '@angular/material/menu';
 @NgModule({
   declarations: [
     ProjectComponent,
-    ProjectDetailComponent,
     ProjectFormComponent,
   ],
   imports: [

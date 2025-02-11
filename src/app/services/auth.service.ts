@@ -1,6 +1,7 @@
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
+import { Login, RoleResponse, TokenResponse } from '../dto/project';
 @Injectable({
   providedIn: 'root',
 })
@@ -24,20 +25,14 @@ export class AuthService {
   role$ = this.roleSubject.asObservable();
   userId$ = this.userIdSubject.asObservable();
 
-  getRoles(): Observable<any> {
-    return this.http.get('http://localhost:8080/role/allRoles');
+  getRoles(): Observable<RoleResponse[]> {
+    return this.http.get<RoleResponse[]>('http://localhost:8080/role/allRoles');
   }
 
 
-
-  // Correct ------------------------------------------------------------------------------------------------------------------
-
-  // Login ------------------------
-  login(loginDTO: any): Observable<any> {
-    return this.http.post('http://localhost:8080/user/login', loginDTO);
+  login(loginDTO: Login): Observable<TokenResponse> {
+    return this.http.post<TokenResponse>('http://localhost:8080/user/login', loginDTO);
   }
-
-  // SignUp -------------------------------------------------------------------------------------------------------------------
 
   register(newUser: any): Observable<any> {
     return this.http.post('http://localhost:8080/user/create', newUser);

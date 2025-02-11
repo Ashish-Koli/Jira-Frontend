@@ -5,12 +5,6 @@ export interface AddUser {
   role: number;
 }
 
-export interface AddUser {
-  userId:number;
-  userName: string;
-  email: string;
-  password: string;
-}
 
 export interface Project {
   projectId: number;
@@ -138,6 +132,18 @@ export interface AddRelease {
   sprint: number;
 }
 
+export interface ReleaseResponse{
+  releaseId:number;
+  releaseName:string;
+  sprintId:number;
+  sprintName:string;
+}
+
 export interface UpdateStoryStatusDTO {
   storyStatusId: number;
+}
+
+export interface RoleResponse{
+  id:number;
+  title:string;
 }

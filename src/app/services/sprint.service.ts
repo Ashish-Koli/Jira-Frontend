@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { AddRelease, AddSprint, SprintResponse } from '../dto/project';
+import { AddRelease, AddSprint, ReleaseResponse, SprintResponse } from '../dto/project';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +13,9 @@ export class SprintService {
     return this.http.get<SprintResponse[]>(`http://localhost:8080/sprint/user/${id}`)
   }
 
+  getSprintById(id:number): Observable<SprintResponse[]> {
+    return this.http.get<SprintResponse[]>(`http://localhost:8080/sprint/${id}`)
+  }
   createSprint(sprint: AddSprint): Observable<SprintResponse> {
     return this.http.post<SprintResponse>(
       `http://localhost:8080/sprint/create`,
@@ -31,11 +34,11 @@ export class SprintService {
     return this.http.delete<void>(`http://localhost:8080/sprint/delete/${id}`);
   }
 
-  createRelease(release: AddRelease): Observable<any> {
-    return this.http.post<any>(`http://localhost:8080/release/create`, release);
+  createRelease(release: AddRelease): Observable<ReleaseResponse> {
+    return this.http.post<ReleaseResponse>(`http://localhost:8080/release/create`, release);
   }
 
-  updateRelease(release: AddRelease): Observable<any> {
-    return this.http.put<any>(`http://localhost:8080/release/update`, release);
+  updateRelease(release: AddRelease): Observable<ReleaseResponse> {
+    return this.http.put<ReleaseResponse>(`http://localhost:8080/release/update`, release);
   }
 }

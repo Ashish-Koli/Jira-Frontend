@@ -29,6 +29,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { StoryDetailsComponent } from './story-details/story-details.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+
 
 @NgModule({
   declarations: [
@@ -67,6 +69,7 @@ import { StoryDetailsComponent } from './story-details/story-details.component';
     MatToolbarModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatProgressBarModule
   ],
   exports: [JiraRoutingModule],
 })

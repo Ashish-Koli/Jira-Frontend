@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { StoryFormComponent } from './story-form/story-form.component';
 import { StoryDetailsComponent } from './story-details/story-details.component';
 import { AuthService } from '../services/auth.service';
+import { SprintService } from '../services/sprint.service';
 
 @Component({
   selector: 'app-jira',
@@ -25,17 +26,21 @@ export class JiraComponent implements OnInit {
   board!:string | null;
   sprint!:string | null;
   userId!: number;
+  sprintDetails!: any;
+  startDate:any;
 
 
   constructor(
     private route: ActivatedRoute,
     private storyService: StoryService,
     private dialog: MatDialog,
-    private auth: AuthService
+    private auth: AuthService,
+    private sprintService:SprintService
   ) {
     this.auth.userId$.subscribe((userId) => {
       this.userId = userId;
     });
+
   }
 
 
@@ -47,9 +52,13 @@ export class JiraComponent implements OnInit {
       this.board = data.get('board');
       this.sprint = data.get('sprint');
       console.log('i will fetch projects of id:', this.id);
-      this.fetchStories(this.id);
+      this.sprintService.getSprintById(+this.id).subscribe((data)=>{
+        this.sprintDetails = data;
+        this.startDate = this.sprintDetails.startDate;
+        console.log(this.sprintDetails);
+      })
     });
-    console.log(this.id);
+    
   }
   stories: any = {
     ToDo: [],
@@ -58,7 +67,8 @@ export class JiraComponent implements OnInit {
     Blocked: [],
   };
 
-  sprintDetails!: any;
+
+  
 
   fetchStories(id: string | null): void {
     this.storyService.getCategorizedStories(+this.id).subscribe({

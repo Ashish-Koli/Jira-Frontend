@@ -76,15 +76,15 @@ export class SprintComponent implements OnInit {
 
     });
   }
-  openProjectForm(sprint: SprintResponse, id: any) {
+  openProjectForm(sprint: SprintResponse, id: number) {
     const editSprint:EditSprint = {
       sprintNo: sprint.sprintNo,
       sprintName: sprint.sprintName,
       sprintPoint: sprint.sprintPoint,
       startDate: sprint.startDate,
       endDate: sprint.endDate,
-      board: sprint.boardId,
-      releaseName:sprint.releaseName,
+      board: sprint.board.boardId,
+      releaseName:sprint.release.releaseName,
     };
     console.log(editSprint);
     const dialogRef = this.dialog.open(SprintFormComponent, {

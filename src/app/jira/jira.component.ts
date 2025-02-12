@@ -8,7 +8,7 @@ import { SharedService } from '../services/shared.service';
 import { ActivatedRoute } from '@angular/router';
 import { JiraService } from '../services/jira.service';
 import { StoryService } from '../services/story.service';
-import { AddStory, UpdateStoryStatusDTO } from '../dto/project';
+import { AddStory, StoryCategories, StoryResponse, UpdateStoryStatusDTO } from '../dto/project';
 import { MatDialog } from '@angular/material/dialog';
 import { StoryFormComponent } from './story-form/story-form.component';
 import { StoryDetailsComponent } from './story-details/story-details.component';
@@ -21,13 +21,12 @@ import { SprintService } from '../services/sprint.service';
   styleUrls: ['./jira.component.css'],
 })
 export class JiraComponent implements OnInit {
-  id: any;
+  id!: string | null;
   project!:string | null;
   board!:string | null;
   sprint!:string | null;
   userId!: number;
-  sprintDetails!: any;
-  startDate:any;
+
 
 
   constructor(
@@ -51,27 +50,37 @@ export class JiraComponent implements OnInit {
       this.project = data.get('project');
       this.board = data.get('board');
       this.sprint = data.get('sprint');
-      console.log('i will fetch projects of id:', this.id);
-      this.sprintService.getSprintById(+this.id).subscribe((data)=>{
-        this.sprintDetails = data;
-        this.startDate = this.sprintDetails.startDate;
-        console.log(this.sprintDetails);
-      })
+      this.fetchStories(this.id);
+      // if(this.id){
+      //   this.sprintService.getSprintById(+this.id).subscribe((data)=>{
+      //     this.sprintDetails = data;
+      //     this.startDate = this.sprintDetails.startDate;
+      //     console.log(this.sprintDetails);
+      //   })
+      // }
+     
     });
     
   }
-  stories: any = {
-    ToDo: [],
-    InProgress: [],
-    Done: [],
-    Blocked: [],
-  };
+  stories:any = {
+  ToDo:[],
+  InProgress: [],
+  Done: [],
+  Blocked: [],
+
+  }
+
+  xyz!:Map<string, StoryResponse[]>;
 
 
-  
+  ToDo!:StoryResponse[];
+  InProgress!:StoryResponse[];
+  Done!:StoryResponse[];
+  Blocked!:StoryResponse[];
 
   fetchStories(id: string | null): void {
-    this.storyService.getCategorizedStories(+this.id).subscribe({
+    if(id){
+  this.storyService.getCategorizedStories(+id).subscribe({
       next: (data) => {
         this.stories = data;
         console.log(data);
@@ -80,6 +89,8 @@ export class JiraComponent implements OnInit {
         console.error('Error fetching stories', error);
       },
     });
+    }
+  
   }
 
   drop(event: CdkDragDrop<any[]>) {
@@ -126,7 +137,7 @@ export class JiraComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => this.fetchStories(this.id));
   }
 
-  edit(story: any, id: number) {
+  edit(story: StoryResponse, id: number) {
     console.log(story);
     const editStory = {
       storyName: story.storyName,

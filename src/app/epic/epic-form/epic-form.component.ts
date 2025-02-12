@@ -5,7 +5,7 @@ import { BoardFromComponent } from '../../board/board-from/board-from.component'
 import { EpicService } from 'src/app/services/epic.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { map } from 'rxjs';
-import { AddEpic, ProjectResponse } from 'src/app/dto/project';
+import { AddEpic, ProjectNamesResponse, ProjectResponse } from 'src/app/dto/project';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class EpicFormComponent implements OnInit {
   currentIndex!: number;
   value: string = 'Add';
   userId!: number;
-  projects: ProjectResponse[] = [];
+  projects: ProjectNamesResponse[] = [];
 
   epicForm!: FormGroup;
   constructor(
@@ -35,7 +35,7 @@ export class EpicFormComponent implements OnInit {
 
     this.projectService
       .getProjectNamesByUserId(this.userId)
-      .subscribe((projectNameList: ProjectResponse[]) => {
+      .subscribe((projectNameList: ProjectNamesResponse[]) => {
         this.projects = projectNameList;
       });
   }

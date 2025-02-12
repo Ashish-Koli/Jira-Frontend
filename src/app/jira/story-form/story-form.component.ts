@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
-import { AddStory } from 'src/app/dto/project';
+import { AddStory, BoardResponse, ProjectBoardResponse, ProjectBoardSprintsResponse, ProjectEpicsResponse, ProjectResponse, SprintResponse, StoryStatusResponse } from 'src/app/dto/project';
 import { ProjectService } from 'src/app/services/project.service';
 import { SprintService } from 'src/app/services/sprint.service';
 import { StoryService } from 'src/app/services/story.service';
@@ -18,11 +18,11 @@ export class StoryFormComponent implements OnInit {
   currentIndex!: number;
   value: string = 'Add';
   currentId!: number;
-  projects: any[] = [];
-  boards: any[] = [];
-  sprints: any[] = [];
-  storyStatus: any[] = [];
-  epics: any[] = [];
+  projects: ProjectResponse[] = [];
+  boards: ProjectBoardResponse[] = [];
+  sprints: ProjectBoardSprintsResponse[] = [];
+  storyStatus: StoryStatusResponse[] = [];
+  epics: ProjectEpicsResponse[] = [];
   userId!:number;
   constructor(
     private fb: FormBuilder,
@@ -30,7 +30,11 @@ export class StoryFormComponent implements OnInit {
     private projectService: ProjectService,
     public dialogRef: MatDialogRef<StoryFormComponent>,
     private auth:AuthService,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data:{editStory:{
+      storyName: string,
+      description: string,
+      storyStatus: number,
+    }, id:number}
   ) {
 
     this.auth.userId$.subscribe((userId) => {

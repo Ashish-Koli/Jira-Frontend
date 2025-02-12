@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CommentResponse, StoryResponse, SubTaskResponse } from 'src/app/dto/project';
 import { StoryService } from 'src/app/services/story.service';
 
 @Component({
@@ -9,16 +10,16 @@ import { StoryService } from 'src/app/services/story.service';
   styleUrls: ['./story-details.component.css'],
 })
 export class StoryDetailsComponent implements OnInit {
-  story: any = null;
+  story!: StoryResponse;
   commentForm!: FormGroup;
   newComment = '';
   newSubTask='';
-  comments: any = [];
-  subTasks:any = [];
+  comments: CommentResponse[] = [];
+  subTasks:SubTaskResponse[] = [];
   constructor(
     // private fb: FormBuilder,
     public dialogRef: MatDialogRef<StoryDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: { id: number },
     private storyService: StoryService
   ) {
     console.log(this.data.id);
@@ -42,6 +43,7 @@ export class StoryDetailsComponent implements OnInit {
   fetchComments(id: number) {
     this.storyService.getAllCommentByStoryId(id).subscribe((data) => {
       this.comments = data;
+      console.log(data);
     });
   }
 

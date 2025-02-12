@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { AddProject, Project, ProjectResponse } from '../dto/project';
-import { User } from '../example-project/project-form/project-form.component';
+import { AddProject, ProjectNamesResponse, ProjectResponse, UserResponse } from '../dto/project';
 
 @Injectable({
   providedIn: 'root',
@@ -10,29 +9,29 @@ import { User } from '../example-project/project-form/project-form.component';
 export class ProjectService {
   constructor(private http: HttpClient) {}
 
-  getProjectNamesByUserId(id: number): Observable<ProjectResponse[]> {
-    return this.http.get<ProjectResponse[]>(
+  getProjectNamesByUserId(id: number): Observable<ProjectNamesResponse[]> {
+    return this.http.get<ProjectNamesResponse[]>(
       `http://localhost:8080/project/projectNames/user/${id}`
     );
   }
 
-  getUsers(): Observable<User[]> {
-    return this.http.get<User[]>('http://localhost:8080/user/allUser');
+  getUsers(): Observable<UserResponse[]> {
+    return this.http.get<UserResponse[]>('http://localhost:8080/user/allUser');
   }
 
-  getAllProjectsByUserId(id: number): Observable<Project[]> {
-    return this.http.get<Project[]>(`http://localhost:8080/project/user/${id}`);
+  getAllProjectsByUserId(id: number): Observable<ProjectResponse[]> {
+    return this.http.get<ProjectResponse[]>(`http://localhost:8080/project/user/${id}`);
   }
 
-  createProject(project: AddProject): Observable<Project> {
-    return this.http.post<Project>(
+  createProject(project: AddProject): Observable<ProjectResponse> {
+    return this.http.post<ProjectResponse>(
       `http://localhost:8080/project/create`,
       project
     );
   }
 
-  updateProject(project: AddProject, id: number): Observable<Project> {
-    return this.http.put<Project>(
+  updateProject(project: AddProject, id: number): Observable<ProjectResponse> {
+    return this.http.put<ProjectResponse>(
       `http://localhost:8080/project/update/${id}`,
       project
     );

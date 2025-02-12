@@ -75,7 +75,7 @@ export class EpicComponent implements OnInit {
     const editEpic:AddEpic = {
       epicName:epic.epicName,
       description:epic.description,
-      project:epic.projectId
+      project:epic.project.projectId
     };
     console.log(epic);
     console.log(editEpic);

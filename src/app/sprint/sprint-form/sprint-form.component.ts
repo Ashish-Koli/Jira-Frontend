@@ -6,6 +6,7 @@ import {
   AddRelease,
   AddSprint,
   BoardResponse,
+  EditSprint,
   SprintResponse,
 } from 'src/app/dto/project';
 import { BoardService } from 'src/app/services/board.service';
@@ -29,7 +30,7 @@ export class SprintFormComponent implements OnInit {
     private boardService: BoardService,
     private auth: AuthService,
     public dialogRef: MatDialogRef<SprintFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: { editSprint: EditSprint, id: number }
   ) {
     this.auth.userId$.subscribe((userId) => {
       this.userId = userId;

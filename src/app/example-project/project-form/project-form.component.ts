@@ -2,28 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { map } from 'rxjs';
+import { AddProject, UserResponse } from 'src/app/dto/project';
 import { ProjectService } from 'src/app/services/project.service';
-export interface User {
-  userId: number;
-  userName: string;
-  email: string;
-  role: string;
-}
-export class AddProjectDTO {
-  projectName: string;
-  projectDescription: string;
-  userList: number[];
 
-  constructor(
-    projectName: string,
-    projectDescription: string,
-    userList: number[]
-  ) {
-    this.projectName = projectName;
-    this.projectDescription = projectDescription;
-    this.userList = userList;
-  }
-}
 @Component({
   selector: 'app-project-form',
   templateUrl: './project-form.component.html',
@@ -35,31 +16,18 @@ export class ProjectFormComponent implements OnInit {
   currentIndex!: number;
   value: string = 'Add';
   currentId!: number;
-  users: User[] = [];
+  users: UserResponse[] = [];
 
   constructor(
     private fb: FormBuilder,
     private projectService: ProjectService,
     public dialogRef: MatDialogRef<ProjectFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data:  {editProject: AddProject, id: number }
   ) {
     projectService
-      .getUsers()
-      .pipe(
-        map((data: any) => {
-          return data?.map((obj: User) => {
-            return {
-              userId: obj.userId,
-              userName: obj.userName,
-              userEmail: obj.email,
-              userRole: obj.role,
-            };
-          });
-        })
-      )
-      .subscribe((usersList: User[]) => {
-        this.users = usersList;
-      });
+      .getUsers().subscribe((data)=>{
+        this.users = data;
+      })
   }
   ngOnInit(): void {
     this.projectForm = this.fb.group({
@@ -76,7 +44,7 @@ export class ProjectFormComponent implements OnInit {
     }
   }
   save() {
-    const newProject: AddProjectDTO = this.projectForm.value;
+    const newProject: AddProject = this.projectForm.value;
     console.log(newProject);
     if (this.editMode) {
       this.projectService

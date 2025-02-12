@@ -1,7 +1,7 @@
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { Login, RoleResponse, TokenResponse } from '../dto/project';
+import { AddUser, Login, RoleResponse, TokenResponse, UserResponse } from '../dto/project';
 @Injectable({
   providedIn: 'root',
 })
@@ -34,8 +34,8 @@ export class AuthService {
     return this.http.post<TokenResponse>('http://localhost:8080/user/login', loginDTO);
   }
 
-  register(newUser: any): Observable<any> {
-    return this.http.post('http://localhost:8080/user/create', newUser);
+  register(newUser: AddUser): Observable<UserResponse> {
+    return this.http.post<UserResponse>('http://localhost:8080/user/create', newUser);
   }
 
   setToken(token: string, role: string, userId: number) {

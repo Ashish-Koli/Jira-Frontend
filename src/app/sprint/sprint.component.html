@@ -53,12 +53,12 @@
 
       <ng-container matColumnDef="board">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Board Name</th>
-        <td mat-cell *matCellDef="let sprint">{{ sprint.board }}</td>
+        <td mat-cell *matCellDef="let sprint">{{ sprint.board.boardName }}</td>
       </ng-container>
 
       <ng-container matColumnDef="releaseName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Release Name</th>
-        <td mat-cell *matCellDef="let sprint">{{ sprint.releaseName }}</td>
+        <td mat-cell *matCellDef="let sprint">{{ sprint.release.releaseName }}</td>
       </ng-container>
 
       <ng-container matColumnDef="actions">

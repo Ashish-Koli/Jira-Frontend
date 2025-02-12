@@ -43,7 +43,7 @@ export class BoardComponent implements OnInit {
   fetchBoards() {
     this.boardService
       .getAllBoardsByUserId(this.userId)
-      .subscribe((data: BoardResponse[]) => {
+      .subscribe((data) => {
         this.boards = data;
         console.log(this.boards);
         this.dataSource = new MatTableDataSource(this.boards);
@@ -72,7 +72,7 @@ export class BoardComponent implements OnInit {
   openProjectForm(board: BoardResponse, id: number) {
     const editBoard:AddBoard = {
       boardName:board.boardName,
-      project:board.projectId
+      project:board.project.projectId
     };
 
     console.log(editBoard);

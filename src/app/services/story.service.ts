@@ -6,6 +6,12 @@ import {
   AddStory,
   AddSubTask,
   BoardResponse,
+  CommentResponse,
+  SprintResponse,
+  StoryCategories,
+  StoryResponse,
+  StoryStatusResponse,
+  SubTaskResponse,
   UpdateStoryStatusDTO,
 } from '../dto/project';
 
@@ -15,81 +21,73 @@ import {
 export class StoryService {
   constructor(private http: HttpClient) {}
 
-  getCategorizedStories(sprintId: number): Observable<any> {
-    return this.http.get<any>(
+  getCategorizedStories(sprintId: number): Observable<Map<string, StoryResponse[]>> {
+    return this.http.get<Map<string, StoryResponse[]>>(
       `http://localhost:8080/sprint/${sprintId}/stories`
     );
   }
 
-  createStory(story: AddStory): Observable<any[]> {
-    return this.http.post<any[]>(`http://localhost:8080/story/create`, story);
+  createStory(story: AddStory): Observable<AddStory> {
+    return this.http.post<AddStory>(`http://localhost:8080/story/create`, story);
   }
 
   updateStoryStatus(
     storyStatus: UpdateStoryStatusDTO,
     id: number
-  ): Observable<any> {
-    return this.http.put<any>(
+  ): Observable<UpdateStoryStatusDTO> {
+    return this.http.put<UpdateStoryStatusDTO>(
       `http://localhost:8080/story/update/storyStatus/${id}`,
       storyStatus
     );
   }
 
-  deleteStory(id: number): Observable<any> {
-    return this.http.delete<any>(`http://localhost:8080/story/delete/${id}`);
+  deleteStory(id: number): Observable<void> {
+    return this.http.delete<void>(`http://localhost:8080/story/delete/${id}`);
   }
 
-  updateStory(story: AddStory, id: number): Observable<any> {
-    return this.http.put<any>(
+  updateStory(story: AddStory, id: number): Observable<AddStory> {
+    return this.http.put<AddStory>(
       `http://localhost:8080/story/update/${id}`,
       story
     );
   }
 
-  getBoardsByUserId(id: number): Observable<BoardResponse[]> {
-    return this.http.get<BoardResponse[]>(
-      `http://localhost:8080/board/allBoards/user/${id}`
-    );
-  }
-  getSprintByBoardId(id: number): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:8080/sprint/board/${id}`);
-  }
 
-  getAllStoryStatus(): Observable<any[]> {
-    return this.http.get<any[]>(
+  getAllStoryStatus(): Observable<StoryStatusResponse[]> {
+    return this.http.get<StoryStatusResponse[]>(
       `http://localhost:8080/storyStatus/allStoryStatus`
     );
   }
 
-  getAllCommentByStoryId(id: number): Observable<any[]> {
-    return this.http.get<any[]>(
+  getAllCommentByStoryId(id: number): Observable<CommentResponse[]> {
+    return this.http.get<CommentResponse[]>(
       `http://localhost:8080/comments/allComment/${id}`
     );
   }
 
-  getAllSubTaskByStoryId(id: number): Observable<any[]> {
-    return this.http.get<any[]>(
+  getAllSubTaskByStoryId(id: number): Observable<SubTaskResponse[]> {
+    return this.http.get<SubTaskResponse[]>(
       `http://localhost:8080/subTask/allSubTask/${id}`
     );
   }
 
-  addComment(comment: AddComment): Observable<any[]> {
-    return this.http.post<any[]>(
+  addComment(comment: AddComment): Observable<AddComment> {
+    return this.http.post<AddComment>(
       `http://localhost:8080/comments/create`,
       comment
     );
   }
-  addSubTask(task: AddSubTask): Observable<any[]> {
-    return this.http.post<any[]>(`http://localhost:8080/subTask/create`, task);
+  addSubTask(task: AddSubTask): Observable<AddSubTask> {
+    return this.http.post<AddSubTask>(`http://localhost:8080/subTask/create`, task);
   }
 
-  deleteComment(id: number): Observable<any> {
-    return this.http.delete<any[]>(
+  deleteComment(id: number): Observable<void> {
+    return this.http.delete<void>(
       `http://localhost:8080/comments/delete/${id}`
     );
   }
 
-  getStoryDetailsById(id: number): Observable<any> {
-    return this.http.get<any[]>(`http://localhost:8080/story/${id}`);
+  getStoryDetailsById(id: number): Observable<StoryResponse> {
+    return this.http.get<StoryResponse>(`http://localhost:8080/story/${id}`);
   }
 }

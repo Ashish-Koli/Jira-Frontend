@@ -4,6 +4,7 @@ import { ProjectService } from '../services/project.service';
 import { SharedService } from '../services/shared.service';
 import { Router } from '@angular/router';
 import { EventService } from '../services/event.service';
+import { ProjectResponse } from '../dto/project';
 
 @Component({
   selector: 'app-nav',
@@ -14,7 +15,7 @@ export class NavComponent implements OnInit {
   isAuthenticated!: boolean;
   role!: string;
   userId!: number;
-  projects: any[] = [];
+  projects: ProjectResponse[] = [];
 
   constructor(
     private auth: AuthService,

@@ -3,10 +3,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
-import { ProjectFormComponent, User } from './project-form/project-form.component';
+import { ProjectFormComponent } from './project-form/project-form.component';
 import { ProjectService } from 'src/app/services/project.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { AddProject, Project } from 'src/app/dto/project';
+import { AddProject, ProjectResponse, ProjectUsersResponse } from 'src/app/dto/project';
 import { EventService } from '../services/event.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class ProjectComponent implements OnInit {
     'projectDescription',
     'actions',
   ];
-  dataSource = new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource<ProjectResponse>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -42,12 +42,12 @@ export class ProjectComponent implements OnInit {
     this.fetchProjects();
   }
 
-  projects!: Project[];
+  projects!: ProjectResponse[];
 
   fetchProjects() {
     this.projectService
       .getAllProjectsByUserId(this.userId)
-      .subscribe((data: Project[]) => {
+      .subscribe((data: ProjectResponse[]) => {
         this.projects = data;
         console.log(data);
         console.log(this.projects);
@@ -71,12 +71,12 @@ export class ProjectComponent implements OnInit {
 
     });
   }
-  openProjectForm(project: AddProject, id: number) {
+  openProjectForm(project: ProjectResponse, id: number) {
   
     const editProject:AddProject = {
       projectName:project.projectName,
       projectDescription:project.projectDescription,
-      userList:project.userList.map((user:any)=>{
+      userList:project.userList.map((user:ProjectUsersResponse)=>{
         return user.userId;
       })
     };

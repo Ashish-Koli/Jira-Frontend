@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth.service';
 import { pipe } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { RoleResponse, TokenResponse } from '../dto/project';
 
 @Component({
   selector: 'app-login',
@@ -15,9 +16,9 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   registerForm!: FormGroup;
   hide: boolean = true;
-  token: any;
+  token!: TokenResponse;
 
-  roles!: any[];
+  roles!: RoleResponse[];
 
   constructor(
     private fb: FormBuilder,
@@ -60,7 +61,7 @@ export class LoginComponent implements OnInit {
       password: password,
     };
     this.auth.login(loginDTO).subscribe(
-      (data: any) => {
+      (data: TokenResponse) => {
         this.token = data;
         this.auth.setToken(data.token, data.role, data.userId);
         console.log(data);

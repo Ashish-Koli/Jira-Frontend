@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
 import { BoardService } from 'src/app/services/board.service';
-import { AddBoard, ProjectResponse } from 'src/app/dto/project';
+import { AddBoard, ProjectNamesResponse, ProjectResponse } from 'src/app/dto/project';
 import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class BoardFromComponent implements OnInit {
   editMode: boolean = false;
   currentIndex!: number;
   value: string = 'Add';
-  projects: ProjectResponse[] = [];
+  projects: ProjectNamesResponse[] = [];
   userId!: number;
 
   constructor(

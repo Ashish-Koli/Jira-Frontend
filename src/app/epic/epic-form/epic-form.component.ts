@@ -56,7 +56,6 @@ export class EpicFormComponent implements OnInit {
   }
 
   save() {
-    console.log(this.epicForm.value);
     const epic: AddEpic = this.epicForm.value;
     if (this.editMode) {
       this.epicService

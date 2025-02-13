@@ -9,19 +9,22 @@
     margin: 8px;
 }
 
+.icon{
+  height: 40px;
+  margin-right: 5px;
+}
+
 .main{
     height: 100%;
     width: 100%;
 }
   
-
 p{
     margin-left: 50px;
     margin-top: 50px;
-    font-size: 40px;
+    font-size: 55px;
     font-weight: 400;
 }
-
 .project-table-container {
     margin-left: 50px;
     margin-right: 50px;

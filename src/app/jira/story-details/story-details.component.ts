@@ -22,7 +22,6 @@ export class StoryDetailsComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: { id: number },
     private storyService: StoryService
   ) {
-    console.log(this.data.id);
     
     this.getStories(this.data.id)
     this.fetchComments(this.data.id);
@@ -43,7 +42,6 @@ export class StoryDetailsComponent implements OnInit {
   fetchComments(id: number) {
     this.storyService.getAllCommentByStoryId(id).subscribe((data) => {
       this.comments = data;
-      console.log(data);
     });
   }
 

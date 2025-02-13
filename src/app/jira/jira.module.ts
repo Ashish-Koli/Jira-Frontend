@@ -30,6 +30,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { StoryDetailsComponent } from './story-details/story-details.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 
 @NgModule({
@@ -69,7 +70,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatToolbarModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    ScrollingModule
   ],
   exports: [JiraRoutingModule],
 })

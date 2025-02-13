@@ -33,13 +33,16 @@ import { MatListModule } from '@angular/material/list';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { LoaderComponent } from './loader/loader.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    NavComponent
+    NavComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +73,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatListModule,
     DragDropModule,
     MatMenuModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressSpinnerModule
     
   ],
   providers: [

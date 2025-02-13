@@ -3,17 +3,18 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { SharedService } from '../services/shared.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { JiraService } from '../services/jira.service';
 import { StoryService } from '../services/story.service';
-import { AddStory, StoryCategories, StoryResponse, UpdateStoryStatusDTO } from '../dto/project';
+import { AddStory, ProjectBoardResponse, ProjectBoardSprintsResponse, ProjectResponse, SprintResponse, StoryCategories, StoryResponse, UpdateStoryStatusDTO } from '../dto/project';
 import { MatDialog } from '@angular/material/dialog';
 import { StoryFormComponent } from './story-form/story-form.component';
 import { StoryDetailsComponent } from './story-details/story-details.component';
 import { AuthService } from '../services/auth.service';
 import { SprintService } from '../services/sprint.service';
+import { endWith } from 'rxjs';
 
 @Component({
   selector: 'app-jira',
@@ -26,20 +27,72 @@ export class JiraComponent implements OnInit {
   board!:string | null;
   sprint!:string | null;
   userId!: number;
+  stories!:StoryCategories;
+  sprintDetails!:SprintResponse;
+  value:number = 0;
+  daysLeft:number = 0;
+  @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
+  users = [
+    { username: 'John' },
+    { username: 'Jane' },
+    { username: 'Alice' },
+    { username: 'Bob' },
+    { username: 'Charlie' },
+    { username: 'David' },
+    { username: 'Eve' },
+    { username: 'John' },
+    { username: 'Jane' },
+    { username: 'Alice' },
+    { username: 'Bob' },
+    { username: 'Charlie' },
+    { username: 'David' },
+    { username: 'Eve' },
+    { username: 'John' },
+    { username: 'Jane' },
+    { username: 'Alice' },
+    { username: 'Bob' },
+    { username: 'Charlie' },
+    { username: 'David' },
+    { username: 'Eve' },
+    { username: 'John' },
+    { username: 'Jane' },
+    { username: 'Alice' },
+    { username: 'Bob' },
+    { username: 'Charlie' },
+    { username: 'David' },
+    { username: 'Eve' }
+  ];
 
-
-
+  scrollLeft() {
+    this.scrollContainer.nativeElement.scrollBy({ left: -150, behavior: 'smooth' });
+  }
+ 
+  scrollRight() {
+    this.scrollContainer.nativeElement.scrollBy({ left: 150, behavior: 'smooth' });
+  }
+  private scrollInterval: any;
+  startScroll(direction: 'left' | 'right') {
+    const scrollAmount = direction === 'left' ? -150 : 150;
+    this.scrollInterval = setInterval(() => {
+      this.scrollContainer.nativeElement.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }, 150);
+  }
+ 
+  stopScroll() {
+    clearInterval(this.scrollInterval);
+  }
   constructor(
     private route: ActivatedRoute,
+    private router:Router,
     private storyService: StoryService,
     private dialog: MatDialog,
     private auth: AuthService,
-    private sprintService:SprintService
+    private sprintService:SprintService,
+    private sharedService:SharedService
   ) {
     this.auth.userId$.subscribe((userId) => {
       this.userId = userId;
     });
-
   }
 
 
@@ -51,39 +104,26 @@ export class JiraComponent implements OnInit {
       this.board = data.get('board');
       this.sprint = data.get('sprint');
       this.fetchStories(this.id);
-      // if(this.id){
-      //   this.sprintService.getSprintById(+this.id).subscribe((data)=>{
-      //     this.sprintDetails = data;
-      //     this.startDate = this.sprintDetails.startDate;
-      //     console.log(this.sprintDetails);
-      //   })
-      // }
-     
+      this.fetchSprintDetails(this.id)
+      
     });
-    
-  }
-  stories:any = {
-  ToDo:[],
-  InProgress: [],
-  Done: [],
-  Blocked: [],
 
   }
 
-  xyz!:Map<string, StoryResponse[]>;
-
-
-  ToDo!:StoryResponse[];
-  InProgress!:StoryResponse[];
-  Done!:StoryResponse[];
-  Blocked!:StoryResponse[];
-
-  fetchStories(id: string | null): void {
+  fetchSprintDetails(id:string|null){
     if(id){
-  this.storyService.getCategorizedStories(+id).subscribe({
+      this.sprintService.getSprintDetailsById(+id).subscribe((data)=>{
+        this.sprintDetails = data;
+        this.calculateProgress(this.sprintDetails.startDate, this.sprintDetails.endDate);
+      })
+    }
+  }
+
+  fetchStories(id: string | null){
+    if(id){
+      this.storyService.getCategorizedStories(+id).subscribe({
       next: (data) => {
         this.stories = data;
-        console.log(data);
       },
       error: (error) => {
         console.error('Error fetching stories', error);
@@ -93,7 +133,32 @@ export class JiraComponent implements OnInit {
   
   }
 
-  drop(event: CdkDragDrop<any[]>) {
+  calculateProgress(startDate:Date, endDate:Date){
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const today = new Date();
+    if (today < start) {
+      this.value =  0;
+      this.daysLeft =  Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+      return;
+    }
+    if (today > end) {
+      this.value =  100;
+      this.daysLeft =   0;
+      return;
+    }
+   
+    const totalDays = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
+    const passedDays = (today.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
+   
+    const progress = Math.round((passedDays / totalDays) * 100);
+    const daysLeft = Math.ceil((end.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+   
+    this.value = progress;
+    this.daysLeft =  daysLeft;
+  }
+
+  drop(event: CdkDragDrop<StoryResponse[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -108,7 +173,6 @@ export class JiraComponent implements OnInit {
         event.currentIndex
       );
       const task = event.container.data[event.currentIndex];
-      console.log(task);
       const newStatus: UpdateStoryStatusDTO = {
         storyStatusId: this.getStatus(event.container.id),
       };
@@ -125,7 +189,6 @@ export class JiraComponent implements OnInit {
   }
 
   story(id: number) {
-    console.log('HEYYYYYYYYY');
     const dialogRef = this.dialog.open(StoryDetailsComponent, {
       data: { id: id },
     });
@@ -138,17 +201,16 @@ export class JiraComponent implements OnInit {
   }
 
   edit(story: StoryResponse, id: number) {
-    console.log(story);
     const editStory = {
       storyName: story.storyName,
       description: story.description,
       storyStatus: story.storyStatus.id,
+      epic:story.epic.epicId
     };
     const dialogRef = this.dialog.open(StoryFormComponent, {
-      data: { editStory: editStory, id: id },
+      data: { editStory: editStory, id: id }
     });
     dialogRef.afterClosed().subscribe(() => this.fetchStories(this.id));
-    console.log(story);
   }
 
   delete(id: number) {

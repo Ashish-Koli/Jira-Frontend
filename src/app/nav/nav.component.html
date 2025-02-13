@@ -66,12 +66,13 @@
         </button>
       </ng-container>
 
-
+      <!-- [routerLink]="'/'+project.projectName+'/'+board.boardName+'/'+sprint.sprintName+'/' +sprint.sprintId " -->
         <mat-menu #sprintMenu="matMenu">
           <ng-container *ngFor="let sprint of board.sprintList">
             <button
               mat-menu-item
-              [routerLink]="'/'+project.projectName+'/'+board.boardName+'/'+sprint.sprintName+'/' +sprint.sprintId "
+              (click)="sprintClicked(project, board, sprint)"
+              
             >
               {{ sprint.sprintName }}
             </button>

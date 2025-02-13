@@ -1,16 +1,37 @@
 <!-- item.user.userId == userId -->
  <div class="container">
   <div class="main">
-    <h4>{{project}} / {{board}}</h4>
+    <h4 class="project">{{project}} / {{board}}</h4>
     <h1>{{sprint}}</h1>
-    <!-- <div class="progress-bar-div">  
-      {{startDate | date:"d / M"}}
-      <mat-progress-bar class="progress-bar" [color]="'green'" mode="determinate" value="90"></mat-progress-bar>
-      {{sprintDetails.endDate | date:"d / M"}}
-    </div>
+    <ng-container *ngIf="sprintDetails">
+      <h4 class="points">Points: {{sprintDetails.sprintPoint}}</h4>
+      <div class="users">
+        <div class="userList">
+          <div class="scroll-wrapper">
+            <button mat-icon-button (click)="scrollLeft()" (mousedown)="startScroll('left')" (mouseup)="stopScroll()" (mouseleave)="stopScroll()">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <div class="scroll-container" #scrollContainer cdkScrollable>
+              <button mat-button *ngFor="let user of users" class="user-button">
+                {{ user.username }}
+              </button>
+            </div>
+            <button mat-icon-button (click)="scrollRight()" (mousedown)="startScroll('right')" (mouseup)="stopScroll()" (mouseleave)="stopScroll()">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+          </div>
+          <div class="progress-bar-div"> 
+          {{sprintDetails.startDate| date:"d / LLL"}}
+          <mat-progress-bar class="progress-bar" [color]="'green'" mode="determinate" [value]="value"></mat-progress-bar>
+          {{sprintDetails.endDate | date:"d / LLL"}}
+        </div>
+      </div>
+    
     <div class="time">  
-      4 Days remaining !
-    </div> -->
+      {{daysLeft}} Days remaining !
+    </div>
+  </ng-container>
     <button
       mat-fab
       (click)="open()"
@@ -18,6 +39,7 @@
     >
       <mat-icon>add</mat-icon>
     </button>
+    <ng-container *ngIf="stories">
     <div class="board">
       <div class="column">
         <h2>To do</h2>
@@ -72,6 +94,7 @@
               </mat-card>
             </div>
           </ng-container>
+          
         </div>
       </div>
       <div class="column">
@@ -245,6 +268,7 @@
         </div>
       </div>
     </div>
+  </ng-container>
   </div>
   
  </div>

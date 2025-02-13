@@ -56,7 +56,6 @@ export class SprintComponent implements OnInit {
       .getAllSprintByUserId(this.userId)
       .subscribe((data: SprintResponse[]) => {
         this.sprints = data;
-        console.log(data);
         this.dataSource = new MatTableDataSource(this.sprints);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -86,7 +85,6 @@ export class SprintComponent implements OnInit {
       board: sprint.board.boardId,
       releaseName:sprint.release.releaseName,
     };
-    console.log(editSprint);
     const dialogRef = this.dialog.open(SprintFormComponent, {
       data: { editSprint: editSprint, id: id },
     });

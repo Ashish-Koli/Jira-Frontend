@@ -49,10 +49,7 @@ export class ProjectComponent implements OnInit {
       .getAllProjectsByUserId(this.userId)
       .subscribe((data: ProjectResponse[]) => {
         this.projects = data;
-        console.log(data);
-        console.log(this.projects);
         this.dataSource = new MatTableDataSource(this.projects);
-        console.log(this.dataSource);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });

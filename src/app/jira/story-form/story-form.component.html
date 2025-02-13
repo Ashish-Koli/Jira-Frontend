@@ -39,40 +39,7 @@
       >
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Project</mat-label>
-      <mat-select formControlName="project">
-        <mat-option
-          *ngFor="let project of projects"
-          [value]="project.projectId"
-        >
-          {{ project.projectName }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <!-- Board Dropdown (Filtered by Project) -->
-    <mat-form-field appearance="fill">
-      <mat-label>Board</mat-label>
-      <mat-select formControlName="board">
-        <mat-option *ngFor="let board of boards" [value]="board.boardId">
-          {{ board.boardName }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <!-- Sprint Dropdown (Filtered by Board) -->
-    <mat-form-field appearance="fill">
-      <mat-label>Sprint</mat-label>
-      <mat-select formControlName="sprint">
-        <mat-option *ngFor="let sprint of sprints" [value]="sprint.sprintId">
-          {{ sprint.sprintName }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <!-- Epic Dropdown (Filtered by Project) -->
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Epic</mat-label>
       <mat-select formControlName="epic">
         <mat-option *ngFor="let epic of epics" [value]="epic.epicId">

@@ -4,7 +4,7 @@ import { ProjectService } from '../services/project.service';
 import { SharedService } from '../services/shared.service';
 import { Router } from '@angular/router';
 import { EventService } from '../services/event.service';
-import { ProjectResponse } from '../dto/project';
+import { ProjectBoardResponse, ProjectBoardSprintsResponse, ProjectResponse, SprintResponse } from '../dto/project';
 
 @Component({
   selector: 'app-nav',
@@ -46,10 +46,15 @@ export class NavComponent implements OnInit {
     });
 
     this.auth.role$.subscribe((role) => {
-      console.log(role);
       this.role = role;
       this.isAuthenticated = this.auth.isAuthenticated();
     });
+  }
+
+
+  sprintClicked(project:ProjectResponse,board:ProjectBoardResponse,sprint:ProjectBoardSprintsResponse){
+    this.router.navigate([project.projectName,board.boardName,sprint.sprintName,sprint.sprintId]);
+    this.sharedService.setProjectDetails({project: project, board:board, sprint:sprint })
   }
 
   logoutMethod() {
@@ -67,7 +72,6 @@ export class NavComponent implements OnInit {
     this.auth.role$.subscribe((role) => {
       this.role = role;
     });
-    console.log(this.role);
     this.isAuthenticated = this.auth.isAuthenticated();
   }
 }

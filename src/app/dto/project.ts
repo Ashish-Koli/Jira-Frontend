@@ -184,7 +184,10 @@ export interface StoryResponse{
 }
 
 export interface StoryCategories{
-  story:Map<string, StoryResponse>
+  ToDo:StoryResponse[];
+  Done:StoryResponse[];
+  InProgress:StoryResponse[];
+  Blocked:StoryResponse[];
 }
 
 export interface StoryStatusResponse{

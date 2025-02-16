@@ -28,6 +28,8 @@
 .main-container{
     height: 600px;
     width: 600px;
+    box-shadow: 0 0 40px #036cff;
+    /* background-color: #1D7AFC; */
 }
 
 .container{

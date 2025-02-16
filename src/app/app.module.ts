@@ -12,10 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-import {
-  HTTP_INTERCEPTORS,
-  HttpClientModule,
-} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { MatRippleModule } from '@angular/material/core';
 import { NavComponent } from './nav/nav.component';
@@ -32,17 +29,18 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AuthInterceptor } from './auth/auth.interceptor';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LoaderComponent } from './loader/loader.component';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     NavComponent,
-    LoaderComponent
+    LoaderComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,8 +72,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     DragDropModule,
     MatMenuModule,
     MatSnackBarModule,
-    MatProgressSpinnerModule
-    
+    MatProgressSpinnerModule,
   ],
   providers: [
     {

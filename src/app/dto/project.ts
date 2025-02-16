@@ -5,16 +5,19 @@ export interface AddUser {
   role: number;
 }
 
-
-export interface UserResponse{
-  userId:number;
-  userName:string;
-  email:string;
-  role:RoleResponse
+export interface UserResponse {
+  userId: number;
+  userName: string;
+  email: string;
+  role: RoleResponse;
 }
-export interface RoleResponse{
-  id:number;
-  title:string;
+export interface UpdateUser {
+  userName: string;
+  email: string;
+}
+export interface RoleResponse {
+  id: number;
+  title: string;
 }
 
 export interface Login {
@@ -34,7 +37,7 @@ export interface AddProject {
   userList: number[];
 }
 
-export interface ProjectNamesResponse{
+export interface ProjectNamesResponse {
   projectId: number;
   projectName: string;
 }
@@ -42,31 +45,31 @@ export interface ProjectNamesResponse{
 export interface ProjectResponse {
   projectId: number;
   projectName: string;
-  projectDescription:string;
+  projectDescription: string;
   boardList: ProjectBoardResponse[];
-  epicList: ProjectEpicsResponse[]
-  userList:ProjectUsersResponse[]
+  epicList: ProjectEpicsResponse[];
+  userList: ProjectUsersResponse[];
 }
 
-export interface ProjectBoardResponse{
-  boardId:number;
-  boardName:string;
-  sprintList:ProjectBoardSprintsResponse[]
+export interface ProjectBoardResponse {
+  boardId: number;
+  boardName: string;
+  sprintList: ProjectBoardSprintsResponse[];
 }
 
-export interface ProjectBoardSprintsResponse{
-  sprintId:number;
-  sprintName:string;
+export interface ProjectBoardSprintsResponse {
+  sprintId: number;
+  sprintName: string;
 }
 
-export interface ProjectEpicsResponse{
-  epicId:number;
-  epicName:string;
+export interface ProjectEpicsResponse {
+  epicId: number;
+  epicName: string;
 }
 
-export interface ProjectUsersResponse{
-  userId:number;
-  userName:string;
+export interface ProjectUsersResponse {
+  userId: number;
+  userName: string;
 }
 
 export interface AddBoard {
@@ -74,13 +77,11 @@ export interface AddBoard {
   project: number;
 }
 
-
 export interface BoardResponse {
   boardId: number;
   boardName: string;
-  project:ProjectNamesResponse
+  project: ProjectNamesResponse;
 }
-
 
 export interface AddSprint {
   sprintNo: string;
@@ -98,7 +99,7 @@ export interface EditSprint {
   startDate: Date;
   endDate: Date;
   board: number;
-  releaseName:string;
+  releaseName: string;
 }
 
 export interface SprintResponse {
@@ -109,13 +110,12 @@ export interface SprintResponse {
   startDate: Date;
   endDate: Date;
   board: BoardNameResponse;
-  release: ReleaseNameResponse
-
+  release: ReleaseNameResponse;
 }
 
 export interface BoardNameResponse {
-  boardId:number;
-  boardName:string;
+  boardId: number;
+  boardName: string;
 }
 
 export interface AddRelease {
@@ -124,10 +124,9 @@ export interface AddRelease {
 }
 
 export interface ReleaseNameResponse {
-    releaseId: number;
-    releaseName: string;
+  releaseId: number;
+  releaseName: string;
 }
-
 
 export interface AddEpic {
   epicName: string;
@@ -139,7 +138,7 @@ export interface EpicResponse {
   epicId: number;
   epicName: string;
   description: string;
-  projectId:number;
+  projectId: number;
   project: ProjectNamesResponse;
 }
 
@@ -149,18 +148,17 @@ export interface AddSubTask {
   story: number;
 }
 
-export interface SubTaskResponse{
-  taskId:number;
+export interface SubTaskResponse {
+  taskId: number;
   taskName: string;
   description: string;
   story: StoryNameResponse;
 }
 
-export interface StoryNameResponse{
-    storyId: number;
-    storyName: string;
+export interface StoryNameResponse {
+  storyId: number;
+  storyName: string;
 }
-
 
 export interface AddStory {
   storyName: string;
@@ -172,27 +170,27 @@ export interface AddStory {
   epic: number;
 }
 
-export interface StoryResponse{
-  storyId:number;
+export interface StoryResponse {
+  storyId: number;
   storyName: string;
   description: string;
-  storyStatus: StoryStatusResponse ;
+  storyStatus: StoryStatusResponse;
   board: BoardNameResponse;
   user: ProjectUsersResponse;
   sprint: ProjectBoardSprintsResponse;
   epic: ProjectEpicsResponse;
 }
 
-export interface StoryCategories{
-  ToDo:StoryResponse[];
-  Done:StoryResponse[];
-  InProgress:StoryResponse[];
-  Blocked:StoryResponse[];
+export interface StoryCategories {
+  ToDo: StoryResponse[];
+  Done: StoryResponse[];
+  InProgress: StoryResponse[];
+  Blocked: StoryResponse[];
 }
 
-export interface StoryStatusResponse{
-  id:number;
-  name:string;
+export interface StoryStatusResponse {
+  id: number;
+  name: string;
 }
 
 export interface AddComment {
@@ -200,16 +198,12 @@ export interface AddComment {
   story: number;
 }
 
-export interface CommentResponse{
-  commentId:number;
-  comment:string;
-  story:StoryNameResponse;
+export interface CommentResponse {
+  commentId: number;
+  comment: string;
+  story: StoryNameResponse;
 }
 
 export interface UpdateStoryStatusDTO {
   storyStatusId: number;
 }
-
-
-
-

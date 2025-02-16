@@ -1,7 +1,13 @@
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { AddUser, Login, RoleResponse, TokenResponse, UserResponse } from '../dto/project';
+import {
+  AddUser,
+  Login,
+  RoleResponse,
+  TokenResponse,
+  UserResponse,
+} from '../dto/project';
 @Injectable({
   providedIn: 'root',
 })
@@ -29,13 +35,22 @@ export class AuthService {
     return this.http.get<RoleResponse[]>('http://localhost:8080/role/allRoles');
   }
 
-
   login(loginDTO: Login): Observable<TokenResponse> {
-    return this.http.post<TokenResponse>('http://localhost:8080/user/login', loginDTO);
+    return this.http.post<TokenResponse>(
+      'http://localhost:8080/user/login',
+      loginDTO
+    );
   }
 
   register(newUser: AddUser): Observable<UserResponse> {
-    return this.http.post<UserResponse>('http://localhost:8080/user/create', newUser);
+    return this.http.post<UserResponse>(
+      'http://localhost:8080/user/create',
+      newUser
+    );
+  }
+
+  getUserById(id: number): Observable<UserResponse> {
+    return this.http.get<UserResponse>(`http://localhost:8080/user/${id}`);
   }
 
   setToken(token: string, role: string, userId: number) {
@@ -62,26 +77,21 @@ export class AuthService {
     return this.getToken() != null;
   }
 
-
-  isAuthorized(id:number):boolean{
-
-    if(!this.isAuthenticated()){
-        return false
+  isAuthorized(id: number): boolean {
+    if (!this.isAuthenticated()) {
+      return false;
     }
-    
-    if(this.getRole()=="Admin" || this.getRole()=="Manager")
-      return true
 
+    if (this.getRole() == 'Admin' || this.getRole() == 'Manager') return true;
 
-    if(this.getRole()=="Developer"){
-      if(this.getUserId() == id){
-        return true
+    if (this.getRole() == 'Developer') {
+      if (this.getUserId() == id) {
+        return true;
       }
     }
-    
-    return false
-  }
 
+    return false;
+  }
 
   logout() {
     localStorage.removeItem('token');

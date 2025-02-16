@@ -6,6 +6,7 @@ import { AddStory, BoardResponse, ProjectBoardResponse, ProjectBoardSprintsRespo
 import { ProjectService } from 'src/app/services/project.service';
 import { SprintService } from 'src/app/services/sprint.service';
 import { StoryService } from 'src/app/services/story.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-story-form',
@@ -18,23 +19,27 @@ export class StoryFormComponent implements OnInit {
   currentIndex!: number;
   value: string = 'Add';
   currentId!: number;
-  projects: ProjectResponse[] = [];
-  boards: ProjectBoardResponse[] = [];
-  sprints: ProjectBoardSprintsResponse[] = [];
+
   storyStatus: StoryStatusResponse[] = [];
   epics: ProjectEpicsResponse[] = [];
-  userId!:number;
+  projectId!:number;
+  board!:number;
+  sprint!:number;
+  userId!:number; 
   constructor(
     private fb: FormBuilder,
     private storyService: StoryService,
-    private projectService: ProjectService,
+    private sharedService: SharedService,
     public dialogRef: MatDialogRef<StoryFormComponent>,
     private auth:AuthService,
     @Inject(MAT_DIALOG_DATA) public data:{editStory:{
       storyName: string,
       description: string,
       storyStatus: number,
-    }, id:number}
+      project:number, 
+      board:number, 
+      sprint:number
+    }, id:number,}
   ) {
 
     this.auth.userId$.subscribe((userId) => {
@@ -47,9 +52,6 @@ export class StoryFormComponent implements OnInit {
       storyName: ['', [Validators.required]],
       description: ['', [Validators.required]],
       storyStatus: [, [Validators.required]],
-      project: [, [Validators.required]],
-      board: [, [Validators.required]],
-      sprint: [, [Validators.required]],
       epic: [, [Validators.required]],
     });
 
@@ -57,74 +59,25 @@ export class StoryFormComponent implements OnInit {
       this.editMode = true;
       this.value = 'Edit';
       this.currentId = this.data.id;
-      console.log(this.data);
       this.storyForm.patchValue(this.data.editStory);
+      
     }
 
     this.getStoryStatus();
-    this.getProjects();
-
-    this.storyForm.get('project')?.valueChanges.subscribe((projectId) => {
-      this.onProjectChange(projectId);
-    });
-
-    this.storyForm.get('board')?.valueChanges.subscribe((boardId) => {
-      this.onBoardChange(boardId);
-    });
+    this.epics = this.sharedService.getProjectDetails().project.epicList;
+    this.board = this.sharedService.getProjectDetails().board.boardId;
+    this.sprint = this.sharedService.getProjectDetails().sprint.sprintId;
   }
   getStoryStatus() {
     this.storyService.getAllStoryStatus().subscribe((data) => {
       this.storyStatus = data;
-      console.log(data);
     });
   }
-  getProjects() {
-    this.projectService.getAllProjectsByUserId(this.userId).subscribe({
-      next: (data) => {
-        this.projects = data;
-      },
-      error: (err) => {
-        console.error('Failed to load projects:', err);
-      },
-    });
-  }
-  onProjectChange(projectId: number) {
-    const selectedProject = this.projects.find(
-      (project) => project.projectId === projectId
-    );
-
-    if (selectedProject) {
-      this.boards = selectedProject.boardList || [];
-      this.epics = selectedProject.epicList || [];
-      this.storyForm.get('board')?.reset();
-      this.storyForm.get('sprint')?.reset();
-      this.storyForm.get('epic')?.reset();
-
-      this.sprints = []; 
-    } else {
-      this.boards = [];
-      this.epics = [];
-      this.sprints = [];
-    }
-  }
-
-  onBoardChange(boardId: number) {
-    const selectedBoard = this.boards.find(
-      (board) => board.boardId === boardId
-    );
-
-    if (selectedBoard) {
-      this.sprints = selectedBoard.sprintList || [];
-      this.storyForm.get('sprint')?.reset(); 
-    } else {
-      this.sprints = [];
-    }
-  }
-
 
   save() {
     const newStory: AddStory = this.storyForm.value;
-    console.log(newStory);
+    newStory.board = this.board;
+    newStory.sprint = this.sprint;
     if (this.editMode) {
       this.storyService
         .updateStory(newStory, this.currentId)

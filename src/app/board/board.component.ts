@@ -45,7 +45,6 @@ export class BoardComponent implements OnInit {
       .getAllBoardsByUserId(this.userId)
       .subscribe((data) => {
         this.boards = data;
-        console.log(this.boards);
         this.dataSource = new MatTableDataSource(this.boards);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -75,7 +74,6 @@ export class BoardComponent implements OnInit {
       project:board.project.projectId
     };
 
-    console.log(editBoard);
     const dialogRef = this.dialog.open(BoardFromComponent, {
       data: { editBoard: editBoard, id: id },
     });

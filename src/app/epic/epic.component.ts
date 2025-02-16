@@ -51,7 +51,6 @@ export class EpicComponent implements OnInit {
       .getAllEpicByUserId(this.userId)
       .subscribe((data: EpicResponse[]) => {
         this.epics = data;
-        // console.log(data);
         this.dataSource = new MatTableDataSource(this.epics);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -77,8 +76,6 @@ export class EpicComponent implements OnInit {
       description:epic.description,
       project:epic.project.projectId
     };
-    console.log(epic);
-    console.log(editEpic);
     const dialogRef = this.dialog.open(EpicFormComponent, {
       data: { editEpic: editEpic, id: id },
     });

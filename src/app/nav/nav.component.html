@@ -1,4 +1,4 @@
-<mat-toolbar style="background-color: #1D7AFC" class="navbar mat-elevation-z5" >
+<mat-toolbar class="navbar mat-elevation-z5">
   <a routerLink="/" class="logo">
     <img src="./../../assets/jira (2).png" alt="Logo" />
     <h3>Jira</h3>
@@ -29,10 +29,15 @@
     Sign In / Sign Up
   </button>
 
-  <ng-container *ngIf="isAuthenticated">
-    <button mat-button class="logout-button" (click)="logoutMethod()">
-      Logout
+  <ng-container *ngIf="isAuthenticated && user">
+    <button mat-button class="logout-button" [matMenuTriggerFor]="profileMenu">
+      {{ user.userName }}
     </button>
+    <!-- {{ user.userName }} -->
+    <mat-menu #profileMenu="matMenu">
+      <button mat-menu-item [routerLink]="'/profile'">Profile</button>
+      <button mat-menu-item (click)="logoutMethod()">Logout</button>
+    </mat-menu>
   </ng-container>
 </mat-toolbar>
 
@@ -44,34 +49,31 @@
       </button>
     </ng-container>
     <ng-container *ngIf="project.boardList.length <= 0">
-      <button
-        mat-menu-item
-      >
+      <button mat-menu-item>
         {{ project.projectName }}
       </button>
     </ng-container>
 
     <mat-menu #boardMenu="matMenu">
       <ng-container *ngFor="let board of project.boardList">
-        <ng-container *ngIf="board.sprintList.length  > 0">
-        <button mat-menu-item [matMenuTriggerFor]="sprintMenu">
-          {{ board.boardName }}
-        </button>
-      </ng-container>
+        <ng-container *ngIf="board.sprintList.length > 0">
+          <button mat-menu-item [matMenuTriggerFor]="sprintMenu">
+            {{ board.boardName }}
+          </button>
+        </ng-container>
 
-      
-      <ng-container *ngIf="board.sprintList.length  <= 0">
-        <button mat-menu-item >
-          {{ board.boardName }}
-        </button>
-      </ng-container>
+        <ng-container *ngIf="board.sprintList.length <= 0">
+          <button mat-menu-item>
+            {{ board.boardName }}
+          </button>
+        </ng-container>
 
-
+        <!-- [routerLink]="'/'+project.projectName+'/'+board.boardName+'/'+sprint.sprintName+'/' +sprint.sprintId " -->
         <mat-menu #sprintMenu="matMenu">
           <ng-container *ngFor="let sprint of board.sprintList">
             <button
               mat-menu-item
-              [routerLink]="'/'+project.projectName+'/'+board.boardName+'/'+sprint.sprintName+'/' +sprint.sprintId "
+              (click)="sprintClicked(project, board, sprint)"
             >
               {{ sprint.sprintName }}
             </button>

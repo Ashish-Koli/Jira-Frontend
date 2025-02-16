@@ -51,9 +51,6 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log('Log in');
-    console.log(this.loginForm.value.userName);
-    console.log(this.loginForm.value.password);
     const userName = this.loginForm.value.userName;
     const password = this.loginForm.value.password;
     let loginDTO = {
@@ -64,15 +61,10 @@ export class LoginComponent implements OnInit {
       (data: TokenResponse) => {
         this.token = data;
         this.auth.setToken(data.token, data.role, data.userId);
-        console.log(data);
         this.router.navigate(['/project']);
       },
       (error) => {
-        // console.error('Error handler:', error.msg);
-        // console.log('hey');
-        console.log("hahahahahhahhahah");
         this.snackbar.open(error.error.message, "cancel")
-        console.log(error.error.message);
       }
     );
   }

@@ -45,7 +45,6 @@ export class ProjectFormComponent implements OnInit {
   }
   save() {
     const newProject: AddProject = this.projectForm.value;
-    console.log(newProject);
     if (this.editMode) {
       this.projectService
         .updateProject(newProject, this.currentId)

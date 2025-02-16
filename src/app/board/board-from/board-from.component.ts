@@ -47,7 +47,6 @@ export class BoardFromComponent implements OnInit {
       this.editMode = true;
       this.currentIndex = this.data.id;
       this.value = 'Edit';
-      console.log(this.data);
       this.boardForm.patchValue(this.data.editBoard);
     }
   }

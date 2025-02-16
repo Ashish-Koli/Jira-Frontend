@@ -13,8 +13,12 @@ export class SprintService {
     return this.http.get<SprintResponse[]>(`http://localhost:8080/sprint/user/${id}`)
   }
 
-  getSprintById(id:number): Observable<SprintResponse[]> {
-    return this.http.get<SprintResponse[]>(`http://localhost:8080/sprint/${id}`)
+  getSprintById(id:number): Observable<SprintResponse> {
+    return this.http.get<SprintResponse>(`http://localhost:8080/sprint/${id}`)
+  }
+
+  getSprintDetailsById(id:number): Observable<SprintResponse> {
+    return this.http.get<SprintResponse>(`http://localhost:8080/sprint/details/${id}`)
   }
 
   createSprint(sprint: AddSprint): Observable<SprintResponse> {

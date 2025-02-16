@@ -21,8 +21,8 @@ import {
 export class StoryService {
   constructor(private http: HttpClient) {}
 
-  getCategorizedStories(sprintId: number): Observable<Map<string, StoryResponse[]>> {
-    return this.http.get<Map<string, StoryResponse[]>>(
+  getCategorizedStories(sprintId: number): Observable<StoryCategories> {
+    return this.http.get<StoryCategories>(
       `http://localhost:8080/sprint/${sprintId}/stories`
     );
   }

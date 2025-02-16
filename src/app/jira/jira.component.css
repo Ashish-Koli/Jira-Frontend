@@ -3,26 +3,100 @@
   flex-direction: column;
   align-items: center;
 }
+
+.scroll-container {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10px;
+  gap: 10px;
+}
+ 
+.user-button {
+  flex: 0 0 auto;
+  background-color: #1976d2;
+  color: white;
+  border-radius: 20px;
+}
+
+.scroll-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+ 
+.scroll-container {
+  display: flex;
+  overflow-x: hidden;
+  white-space: nowrap;
+  scroll-behavior: smooth;
+  padding: 10px;
+  gap: 10px;
+  width: 300px; /* Adjust as needed */
+}
+ 
+/* Hide Default Scrollbar */
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+ 
+.scroll-container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+ 
+.user-button {
+  flex: 0 0 auto;
+  background-color: #1976d2;
+  color: white;
+  border-radius: 20px;
+}
+ 
+/* Hide Default Scrollbar */
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+ 
+.scroll-container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
 .main{
   display: flex;
-  flex-direction: column;
+  flex-direction: column;   
   align-items: center;
   width: 1500px;
 }
 .progress-bar-div{
-  width: 300px; 
+  width: fit-content; 
   align-self: flex-end;
   margin-top: 10px;
   margin-bottom: 5px;
+  margin-right: 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
+.users{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width:1500px ;
+}
+
+.userList{
+  display: flex;
+  flex-direction: row;
+  height: 65px;
+  max-width: 900px;
+}
+
 .time{
-  width: 300px; 
+  width: fit-content; 
   align-self: flex-end;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  margin-right: 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -33,17 +107,28 @@
   margin-right: 8px;
   width: 150px;
   --mdc-linear-progress-active-indicator-color: rgb(0, 255, 0); 
-  --mdc-linear-progress-track-color: rgb(219, 219, 219); 
+  --mdc-linear-progress-track-color: rgb(100, 100, 100); 
 }
 
+.points{
+  align-self: flex-end;
+  margin-bottom: 0px;
+  font-weight: bold;
+  font-size: 20px;
+  margin-right: 8px;
+}
 
-
-h4{
+.project{
   align-self: flex-start;
   margin-top: 30px;
   margin-bottom: 0px;
 }
 h1{
+  align-self: flex-start;
+  margin-top: 5px;
+  font-size: 40px;
+}
+h3{
   align-self: flex-start;
   margin-top: 5px;
   font-size: 40px;

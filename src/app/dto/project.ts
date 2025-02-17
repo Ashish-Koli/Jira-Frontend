@@ -15,6 +15,12 @@ export interface UpdateUser {
   userName: string;
   email: string;
 }
+
+export interface ChangePassword{
+  currentPassword:string;
+  newPassword:string;
+}
+
 export interface RoleResponse {
   id: number;
   title: string;
@@ -168,6 +174,7 @@ export interface AddStory {
   user: number;
   sprint: number;
   epic: number;
+  assignedTo:number;
 }
 
 export interface StoryResponse {
@@ -179,6 +186,7 @@ export interface StoryResponse {
   user: ProjectUsersResponse;
   sprint: ProjectBoardSprintsResponse;
   epic: ProjectEpicsResponse;
+  assignedTo:ProjectUsersResponse;
 }
 
 export interface StoryCategories {

@@ -2,11 +2,12 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
-import { AddStory, BoardResponse, ProjectBoardResponse, ProjectBoardSprintsResponse, ProjectEpicsResponse, ProjectResponse, SprintResponse, StoryStatusResponse } from 'src/app/dto/project';
+import { AddStory, BoardResponse, ProjectBoardResponse, ProjectBoardSprintsResponse, ProjectEpicsResponse, ProjectResponse, SprintResponse, StoryStatusResponse, UserResponse } from 'src/app/dto/project';
 import { ProjectService } from 'src/app/services/project.service';
 import { SprintService } from 'src/app/services/sprint.service';
 import { StoryService } from 'src/app/services/story.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { JiraService } from 'src/app/services/jira.service';
 
 @Component({
   selector: 'app-story-form',
@@ -26,9 +27,12 @@ export class StoryFormComponent implements OnInit {
   board!:number;
   sprint!:number;
   userId!:number; 
+  users!:UserResponse[];
+
   constructor(
     private fb: FormBuilder,
     private storyService: StoryService,
+    private jiraService:JiraService,
     private sharedService: SharedService,
     public dialogRef: MatDialogRef<StoryFormComponent>,
     private auth:AuthService,
@@ -38,7 +42,8 @@ export class StoryFormComponent implements OnInit {
       storyStatus: number,
       project:number, 
       board:number, 
-      sprint:number
+      sprint:number,
+      assignedTo:number
     }, id:number,}
   ) {
 
@@ -53,6 +58,7 @@ export class StoryFormComponent implements OnInit {
       description: ['', [Validators.required]],
       storyStatus: [, [Validators.required]],
       epic: [, [Validators.required]],
+      assignedTo:[]
     });
 
     if (this.data !== null) {
@@ -67,11 +73,18 @@ export class StoryFormComponent implements OnInit {
     this.epics = this.sharedService.getProjectDetails().project.epicList;
     this.board = this.sharedService.getProjectDetails().board.boardId;
     this.sprint = this.sharedService.getProjectDetails().sprint.sprintId;
+    this.fetchUsers(this.sprint)
   }
   getStoryStatus() {
     this.storyService.getAllStoryStatus().subscribe((data) => {
       this.storyStatus = data;
     });
+  }
+
+  fetchUsers(sprintId:number){
+    this.jiraService.getAllUsersBySprintId(sprintId).subscribe((data)=>{
+      this.users = data;
+    })
   }
 
   save() {

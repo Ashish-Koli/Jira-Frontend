@@ -4,7 +4,7 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Scroll } from '@angular/router';
 import { JiraService } from '../services/jira.service';
 import { StoryService } from '../services/story.service';
 import {
@@ -19,6 +19,7 @@ import { StoryFormComponent } from './story-form/story-form.component';
 import { StoryDetailsComponent } from './story-details/story-details.component';
 import { AuthService } from '../services/auth.service';
 import { SprintService } from '../services/sprint.service';
+import { ScrollDirection } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-jira',
@@ -202,7 +203,7 @@ export class JiraComponent implements OnInit {
     if (containerId === 'todo') return 1;
     if (containerId === 'done') return 2;
     if (containerId === 'inprogress') return 3;
-    return 5; // change this to 4
+    return 4; // change this to 4
   }
 
   story(id: number) {
@@ -218,11 +219,13 @@ export class JiraComponent implements OnInit {
   }
 
   edit(story: StoryResponse, id: number) {
+    console.log(story);
     const editStory = {
       storyName: story.storyName,
       description: story.description,
       storyStatus: story.storyStatus.id,
       epic: story.epic.epicId,
+      assignedTo: story.assignedTo.userId
     };
     const dialogRef = this.dialog.open(StoryFormComponent, {
       data: { editStory: editStory, id: id },

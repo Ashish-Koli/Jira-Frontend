@@ -18,13 +18,13 @@
               <mat-icon>chevron_left</mat-icon>
             </button>
             <div class="scroll-container" #scrollContainer cdkScrollable>
-              <button mat-button class="user-button" (click)="userFilter(0)">
+              <button mat-button [ngClass]="selectedUser === 0 ? 'user-button-selected':'user-button'" (click)="userFilter(0)">
                 All
               </button>
               <ng-container *ngFor="let user of users">
                 <button
                   mat-button
-                  class="user-button"
+                  [ngClass]="selectedUser === user.userId ? 'user-button-selected':'user-button'"
                   (click)="userFilter(user.userId)"
                 >
                   {{ user.userName }}
@@ -62,7 +62,7 @@
     <ng-container *ngIf="stories1">
       <div class="board">
         <div class="column">
-          <h2>To do</h2>
+          <h2>To Do ({{stories1.ToDo.length}})</h2>
           <div
             id="todo"
             cdkDropList
@@ -122,7 +122,7 @@
         </div>
 
         <div class="column">
-          <h2>Inprogress</h2>
+          <h2>Inprogress ({{stories1.InProgress.length}})</h2>
           <div
             id="inprogress"
             cdkDropList
@@ -182,7 +182,7 @@
           </div>
         </div>
         <div class="column">
-          <h2>Done</h2>
+          <h2>Done ({{stories1.Done.length}})</h2>
           <div
             id="done"
             cdkDropList
@@ -242,7 +242,7 @@
           </div>
         </div>
         <div class="column">
-          <h2>Blocked</h2>
+          <h2>Blocked ({{stories1.Blocked.length}})</h2>
           <div
             id="blocked"
             cdkDropList

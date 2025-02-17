@@ -48,6 +48,19 @@
       </mat-select>
     </mat-form-field>
 
+    
+    <mat-form-field appearance="outline" class="input">
+      <mat-label>Assign To</mat-label>
+      <mat-select formControlName="assignedTo">
+        <mat-option *ngFor="let user of users" [value]="user.userId">
+          {{ user.userName }}
+        </mat-option>
+      </mat-select>
+      <!-- <mat-error *ngIf="storyForm.get('assignedTo')?.hasError('required')"
+        >story status is required</mat-error
+      > -->
+    </mat-form-field>
+
     <button
       type="submit"
       mat-raised-button

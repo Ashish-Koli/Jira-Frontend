@@ -44,7 +44,7 @@ export class AuthService {
 
   register(newUser: AddUser): Observable<UserResponse> {
     return this.http.post<UserResponse>(
-      'http://localhost:8080/user/create',
+      'http://localhost:8080/user',
       newUser
     );
   }

@@ -100,13 +100,13 @@ export class JiraComponent implements OnInit {
       this.stories1 = { ...this.stories };
     } else {
       this.stories1 = {
-        ToDo: this.stories.ToDo.filter((story) => story.user.userId === id),
+        ToDo: this.stories.ToDo.filter((story) => story.assignedTo.userId === id),
         InProgress: this.stories.InProgress.filter(
-          (story) => story.user.userId === id
+          (story) => story.assignedTo.userId === id
         ),
-        Done: this.stories.Done.filter((story) => story.user.userId === id),
+        Done: this.stories.Done.filter((story) => story.assignedTo.userId === id),
         Blocked: this.stories.Blocked.filter(
-          (story) => story.user.userId === id
+          (story) => story.assignedTo.userId === id
         ),
       };
     }
@@ -137,7 +137,7 @@ export class JiraComponent implements OnInit {
       this.storyService.getCategorizedStories(+id).subscribe({
         next: (data) => {
           this.stories = data;
-          this.userFilter(0);
+          this.userFilter(this.selectedUser);
         },
         error: (error) => {
           console.error('Error fetching stories', error);
@@ -210,7 +210,6 @@ export class JiraComponent implements OnInit {
     const dialogRef = this.dialog.open(StoryDetailsComponent, {
       data: { id: id },
     });
-    // dialogRef.afterClosed().subscribe(() => this.fetchStories(this.id));
   }
 
   open() {
@@ -239,7 +238,7 @@ export class JiraComponent implements OnInit {
     });
   }
 
-  isAuthorized(id: number): boolean {
-    return this.auth.isAuthorized(id);
+  isAuthorized(userId: number, assigneId:number): boolean {
+    return this.auth.isAuthorized(userId, assigneId);
   }
 }

@@ -48,7 +48,10 @@
     height: 600px;
     width: 900px;
     box-shadow: 0px 0px 80px #1D7AFC ;
+
 }
+
+
 .board-info{
     /* background-color: #1D7AFC; */
     display: flex;

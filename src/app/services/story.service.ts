@@ -27,8 +27,8 @@ export class StoryService {
     );
   }
 
-  createStory(story: AddStory): Observable<AddStory> {
-    return this.http.post<AddStory>(`http://localhost:8080/story/create`, story);
+  createStory(story: AddStory): Observable<StoryResponse> {
+    return this.http.post<StoryResponse>(`http://localhost:8080/story/create`, story);
   }
 
   updateStoryStatus(
@@ -45,8 +45,8 @@ export class StoryService {
     return this.http.delete<void>(`http://localhost:8080/story/delete/${id}`);
   }
 
-  updateStory(story: AddStory, id: number): Observable<AddStory> {
-    return this.http.put<AddStory>(
+  updateStory(story: AddStory, id: number): Observable<StoryResponse> {
+    return this.http.put<StoryResponse>(
       `http://localhost:8080/story/update/${id}`,
       story
     );

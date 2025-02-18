@@ -76,6 +76,7 @@ export interface ProjectEpicsResponse {
 export interface ProjectUsersResponse {
   userId: number;
   userName: string;
+  email:string;
 }
 
 export interface AddBoard {
@@ -214,4 +215,10 @@ export interface CommentResponse {
 
 export interface UpdateStoryStatusDTO {
   storyStatusId: number;
+}
+
+export interface Email{
+  to:string;
+  subject:string;
+  body:string;
 }

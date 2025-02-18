@@ -2,12 +2,13 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
-import { AddStory, BoardResponse, ProjectBoardResponse, ProjectBoardSprintsResponse, ProjectEpicsResponse, ProjectResponse, SprintResponse, StoryStatusResponse, UserResponse } from 'src/app/dto/project';
+import { AddStory, BoardResponse, Email, ProjectBoardResponse, ProjectBoardSprintsResponse, ProjectEpicsResponse, ProjectResponse, SprintResponse, StoryStatusResponse, UserResponse } from 'src/app/dto/project';
 import { ProjectService } from 'src/app/services/project.service';
 import { SprintService } from 'src/app/services/sprint.service';
 import { StoryService } from 'src/app/services/story.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { JiraService } from 'src/app/services/jira.service';
+import { EmailService } from 'src/app/services/email.service';
 
 @Component({
   selector: 'app-story-form',
@@ -34,6 +35,7 @@ export class StoryFormComponent implements OnInit {
     private storyService: StoryService,
     private jiraService:JiraService,
     private sharedService: SharedService,
+    private emailService:EmailService,
     public dialogRef: MatDialogRef<StoryFormComponent>,
     private auth:AuthService,
     @Inject(MAT_DIALOG_DATA) public data:{editStory:{
@@ -94,11 +96,28 @@ export class StoryFormComponent implements OnInit {
     if (this.editMode) {
       this.storyService
         .updateStory(newStory, this.currentId)
-        .subscribe(() => this.dialogRef.close(true));
+        .subscribe((data) => {
+          this.dialogRef.close(true)
+          const email:Email = {
+            to:data.assignedTo.email,
+            subject:"A Story Has Been Modified",
+            body:data.storyName
+        }
+        this.emailService.sendEmail(email).subscribe();
+        });
     } else {
     this.storyService
       .createStory(newStory)
-      .subscribe(() => this.dialogRef.close(true));
+      .subscribe((data) => {
+        this.dialogRef.close(true)
+        const email:Email = {
+            to:data.assignedTo.email,
+            subject:"New Story Assigned To You",
+            body:data.storyName
+        }
+        this.emailService.sendEmail(email).subscribe(); 
+      });
     }
+
   }
 }

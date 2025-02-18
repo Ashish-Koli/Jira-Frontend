@@ -7,14 +7,28 @@
     align-items: center;
     padding: 0 16px;
     background-color: #1D7AFC;
- 
+
   }
   .navbar button {
-    font-size: 20px;
+    font-size: 16px;
     color: #ffffff;
-    
   }
 
+  button[mat-button].active {
+    font-size: 16px;
+    background-color: #ffffff;
+    color: black;
+  }
+  /* .navbar .button-option:hover {
+
+    border: 1px solid white;
+  }
+  .navbar .button-selected {
+    font-size: 16px;
+    background-color: #ffffff;
+    color: black;
+  
+  } */
 
   .logo{
     display: flex;
@@ -45,14 +59,12 @@
   
   .signup-button {
     color: #3f51b5;
-    border-radius: 20px;
     padding: 6px 16px;
     font-weight: bold;
   }
 
   .logout-button{
     color: black;
-    border-radius: 20px;
     padding: 6px 16px;
     font-weight: bold;
   }

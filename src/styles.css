@@ -3,3 +3,23 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+body{
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+
+
+body::-webkit-scrollbar {
+    width: 0.8em;
+  }
+   
+  body::-webkit-scrollbar-track {
+    background-color: #ffffff;
+
+  }
+   
+  body::-webkit-scrollbar-thumb {
+    background-color: #919191;
+  }

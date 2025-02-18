@@ -23,6 +23,7 @@ export class NavComponent implements OnInit {
   userId!: number;
   projects: ProjectResponse[] = [];
   user!: UserResponse;
+  selectedButton:string = "Project";
 
   constructor(
     private auth: AuthService,
@@ -57,6 +58,11 @@ export class NavComponent implements OnInit {
       this.role = role;
       this.isAuthenticated = this.auth.isAuthenticated();
     });
+  }
+
+  setSelectedButton(name:string){
+    this.selectedButton = name;
+    console.log(this.selectedButton);
   }
 
   fetchUser(id: number) {

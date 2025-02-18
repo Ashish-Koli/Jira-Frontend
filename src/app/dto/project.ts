@@ -15,6 +15,12 @@ export interface UpdateUser {
   userName: string;
   email: string;
 }
+
+export interface ChangePassword{
+  currentPassword:string;
+  newPassword:string;
+}
+
 export interface RoleResponse {
   id: number;
   title: string;
@@ -70,6 +76,7 @@ export interface ProjectEpicsResponse {
 export interface ProjectUsersResponse {
   userId: number;
   userName: string;
+  email:string;
 }
 
 export interface AddBoard {
@@ -168,6 +175,7 @@ export interface AddStory {
   user: number;
   sprint: number;
   epic: number;
+  assignedTo:number;
 }
 
 export interface StoryResponse {
@@ -179,6 +187,7 @@ export interface StoryResponse {
   user: ProjectUsersResponse;
   sprint: ProjectBoardSprintsResponse;
   epic: ProjectEpicsResponse;
+  assignedTo:ProjectUsersResponse;
 }
 
 export interface StoryCategories {
@@ -206,4 +215,10 @@ export interface CommentResponse {
 
 export interface UpdateStoryStatusDTO {
   storyStatusId: number;
+}
+
+export interface Email{
+  to:string;
+  subject:string;
+  body:string;
 }

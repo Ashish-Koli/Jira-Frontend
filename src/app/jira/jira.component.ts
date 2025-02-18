@@ -4,7 +4,7 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Scroll } from '@angular/router';
 import { JiraService } from '../services/jira.service';
 import { StoryService } from '../services/story.service';
 import {
@@ -19,6 +19,7 @@ import { StoryFormComponent } from './story-form/story-form.component';
 import { StoryDetailsComponent } from './story-details/story-details.component';
 import { AuthService } from '../services/auth.service';
 import { SprintService } from '../services/sprint.service';
+import { ScrollDirection } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-jira',
@@ -99,13 +100,13 @@ export class JiraComponent implements OnInit {
       this.stories1 = { ...this.stories };
     } else {
       this.stories1 = {
-        ToDo: this.stories.ToDo.filter((story) => story.user.userId === id),
+        ToDo: this.stories.ToDo.filter((story) => story.assignedTo.userId === id),
         InProgress: this.stories.InProgress.filter(
-          (story) => story.user.userId === id
+          (story) => story.assignedTo.userId === id
         ),
-        Done: this.stories.Done.filter((story) => story.user.userId === id),
+        Done: this.stories.Done.filter((story) => story.assignedTo.userId === id),
         Blocked: this.stories.Blocked.filter(
-          (story) => story.user.userId === id
+          (story) => story.assignedTo.userId === id
         ),
       };
     }
@@ -136,7 +137,7 @@ export class JiraComponent implements OnInit {
       this.storyService.getCategorizedStories(+id).subscribe({
         next: (data) => {
           this.stories = data;
-          this.userFilter(0);
+          this.userFilter(this.selectedUser);
         },
         error: (error) => {
           console.error('Error fetching stories', error);
@@ -202,14 +203,13 @@ export class JiraComponent implements OnInit {
     if (containerId === 'todo') return 1;
     if (containerId === 'done') return 2;
     if (containerId === 'inprogress') return 3;
-    return 5; // change this to 4
+    return 4; // change this to 4
   }
 
   story(id: number) {
     const dialogRef = this.dialog.open(StoryDetailsComponent, {
       data: { id: id },
     });
-    // dialogRef.afterClosed().subscribe(() => this.fetchStories(this.id));
   }
 
   open() {
@@ -218,11 +218,13 @@ export class JiraComponent implements OnInit {
   }
 
   edit(story: StoryResponse, id: number) {
+    console.log(story);
     const editStory = {
       storyName: story.storyName,
       description: story.description,
       storyStatus: story.storyStatus.id,
       epic: story.epic.epicId,
+      assignedTo: story.assignedTo.userId
     };
     const dialogRef = this.dialog.open(StoryFormComponent, {
       data: { editStory: editStory, id: id },
@@ -236,7 +238,7 @@ export class JiraComponent implements OnInit {
     });
   }
 
-  isAuthorized(id: number): boolean {
-    return this.auth.isAuthorized(id);
+  isAuthorized(userId: number, assigneId:number): boolean {
+    return this.auth.isAuthorized(userId, assigneId);
   }
 }

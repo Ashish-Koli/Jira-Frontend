@@ -44,7 +44,7 @@ export class AuthService {
 
   register(newUser: AddUser): Observable<UserResponse> {
     return this.http.post<UserResponse>(
-      'http://localhost:8080/user/create',
+      'http://localhost:8080/user',
       newUser
     );
   }
@@ -77,7 +77,7 @@ export class AuthService {
     return this.getToken() != null;
   }
 
-  isAuthorized(id: number): boolean {
+  isAuthorized(userId: number, assigneId:number): boolean {
     if (!this.isAuthenticated()) {
       return false;
     }
@@ -85,7 +85,7 @@ export class AuthService {
     if (this.getRole() == 'Admin' || this.getRole() == 'Manager') return true;
 
     if (this.getRole() == 'Developer') {
-      if (this.getUserId() == id) {
+      if (this.getUserId() == userId || this.getUserId() == assigneId) {
         return true;
       }
     }

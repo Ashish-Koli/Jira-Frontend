@@ -1,32 +1,35 @@
-<ng-container *ngIf="user">
-  <mat-card class="main">
-    <mat-card-title>My Profile</mat-card-title>
-    <form [formGroup]="profileForm" class="form">
-      <mat-form-field appearance="outline">
-        <mat-label>Username</mat-label>
-        <input matInput formControlName="username" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Role</mat-label>
-        <input matInput formControlName="role" />
-      </mat-form-field>
-
-      <button mat-raised-button color="primary" (click)="updateProfile()">
-        Save Changes
-      </button>
-      <button
-        mat-raised-button
-        color="warn"
-        (click)="openChangePasswordDialog()"
-      >
-        Change Password
-      </button>
-    </form>
-  </mat-card>
-</ng-container>
+<div class="main-container">
+  <ng-container *ngIf="user">
+    <mat-card class="main mat-elevation-z5">
+      <mat-card-title>My Profile</mat-card-title>
+      <form [formGroup]="profileForm" class="form">
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" />
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" />
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Role</mat-label>
+          <input matInput formControlName="role" />
+        </mat-form-field>
+  
+        <button mat-raised-button color="primary" (click)="updateProfile()">
+          Save Changes
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="openChangePasswordDialog()"
+        >
+          Change Password
+        </button>
+      </form>
+    </mat-card>
+  </ng-container>
+  
+</div>

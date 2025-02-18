@@ -18,16 +18,15 @@
               <mat-icon>chevron_left</mat-icon>
             </button>
             <div class="scroll-container" #scrollContainer cdkScrollable>
-              <button mat-button class="user-button" (click)="userFilter(0)">
+              <button mat-button  [ngClass]="selectedUser==0 ? 'button-selected':'user-button'" (click)="userFilter(0)">
                 All
               </button>
               <ng-container *ngFor="let user of users">
                 <button
-                  mat-button
-                  class="user-button"
+                  mat-button 
+                    [ngClass]="selectedUser==user.userId ? 'button-selected':'user-button'"
                   (click)="userFilter(user.userId)"
-                >
-                  {{ user.userName }}
+                >{{ user.userName }}
                 </button>
               </ng-container>
             </div>
@@ -62,7 +61,7 @@
     <ng-container *ngIf="stories1">
       <div class="board">
         <div class="column">
-          <h2>To do</h2>
+          <h2>To Do ({{stories1.ToDo.length}})</h2>
           <div
             id="todo"
             cdkDropList
@@ -76,9 +75,9 @@
               <div
                 class="task"
                 cdkDrag
-                [cdkDragDisabled]="!isAuthorized(item.user.userId)"
+                [cdkDragDisabled]="!isAuthorized(item.user.userId, item.assignedTo.userId)"
               >
-                <mat-card class="story-card-todo mat-elevation-z50">
+                <mat-card class="story-card-todo ">
                   <mat-card-header>
                     <mat-card-title>{{ item.storyName }}</mat-card-title>
                     <mat-card-subtitle
@@ -101,7 +100,7 @@
                     <button
                       mat-icon-button
                       color="primary"
-                      *ngIf="isAuthorized(item.user.userId)"
+                      *ngIf="isAuthorized(item.user.userId, item.assignedTo.userId)"
                       (click)="edit(item, item.storyId)"
                     >
                       <mat-icon>edit</mat-icon>
@@ -109,7 +108,7 @@
                     <button
                       mat-icon-button
                       color="warn"
-                      *ngIf="isAuthorized(item.user.userId)"
+                      *ngIf="isAuthorized(item.user.userId, item.assignedTo.userId)"
                       (click)="delete(item.storyId)"
                     >
                       <mat-icon>delete</mat-icon>
@@ -122,7 +121,7 @@
         </div>
 
         <div class="column">
-          <h2>Inprogress</h2>
+          <h2>Inprogress ({{stories1.InProgress.length}})</h2>
           <div
             id="inprogress"
             cdkDropList
@@ -137,7 +136,7 @@
               <div
                 class="task"
                 cdkDrag
-                [cdkDragDisabled]="!isAuthorized(item.user.userId)"
+                [cdkDragDisabled]="!isAuthorized(item.user.userId, item.assignedTo.userId)"
               >
                 <mat-card class="story-card-inprogress">
                   <mat-card-header>
@@ -162,7 +161,7 @@
                     <button
                       mat-icon-button
                       color="primary"
-                      *ngIf="isAuthorized(item.user.userId)"
+                      *ngIf="isAuthorized(item.user.userId, item.assignedTo.userId)"
                       (click)="edit(item, item.storyId)"
                     >
                       <mat-icon>edit</mat-icon>
@@ -170,7 +169,7 @@
                     <button
                       mat-icon-button
                       color="warn"
-                      *ngIf="isAuthorized(item.user.userId)"
+                      *ngIf="isAuthorized(item.user.userId, item.assignedTo.userId)"
                       (click)="delete(item.storyId)"
                     >
                       <mat-icon>delete</mat-icon>
@@ -182,7 +181,7 @@
           </div>
         </div>
         <div class="column">
-          <h2>Done</h2>
+          <h2>Done ({{stories1.Done.length}})</h2>
           <div
             id="done"
             cdkDropList
@@ -197,7 +196,7 @@
               <div
                 class="task"
                 cdkDrag
-                [cdkDragDisabled]="!isAuthorized(item.user.userId)"
+                [cdkDragDisabled]="!isAuthorized(item.user.userId, item.assignedTo.userId)"
               >
                 <mat-card class="story-card-done">
                   <mat-card-header>
@@ -220,7 +219,7 @@
                       <mat-icon>visibility</mat-icon>
                     </button>
                     <button
-                      *ngIf="isAuthorized(item.user.userId)"
+                      *ngIf="isAuthorized(item.user.userId, item.assignedTo.userId)"
                       mat-icon-button
                       color="primary"
                       (click)="edit(item, item.storyId)"
@@ -230,7 +229,7 @@
                     <button
                       mat-icon-button
                       color="warn"
-                      *ngIf="isAuthorized(item.user.userId)"
+                      *ngIf="isAuthorized(item.user.userId, item.assignedTo.userId)"
                       (click)="delete(item.storyId)"
                     >
                       <mat-icon>delete</mat-icon>
@@ -242,7 +241,7 @@
           </div>
         </div>
         <div class="column">
-          <h2>Blocked</h2>
+          <h2>Blocked ({{stories1.Blocked.length}})</h2>
           <div
             id="blocked"
             cdkDropList
@@ -257,7 +256,7 @@
               <div
                 class="task"
                 cdkDrag
-                [cdkDragDisabled]="!isAuthorized(item.user.userId)"
+                [cdkDragDisabled]="!isAuthorized(item.user.userId, item.assignedTo.userId)"
               >
                 <mat-card class="story-card-block">
                   <mat-card-header>
@@ -275,7 +274,7 @@
                     <button
                       mat-icon-button
                       color="basic"
-                      *ngIf="isAuthorized(item.user.userId)"
+                      *ngIf="isAuthorized(item.user.userId, item.assignedTo.userId)"
                       (click)="story(item.storyId)"
                     >
                       <mat-icon>visibility</mat-icon>
@@ -283,7 +282,7 @@
                     <button
                       mat-icon-button
                       color="primary"
-                      *ngIf="isAuthorized(item.user.userId)"
+                      *ngIf="isAuthorized(item.user.userId, item.assignedTo.userId)"
                       (click)="edit(item, item.storyId)"
                     >
                       <mat-icon>edit</mat-icon>
@@ -291,7 +290,7 @@
                     <button
                       mat-icon-button
                       color="warn"
-                      *ngIf="isAuthorized(item.user.userId)"
+                      *ngIf="isAuthorized(item.user.userId, item.assignedTo.userId)"
                       (click)="delete(item.storyId)"
                     >
                       <mat-icon>delete</mat-icon>

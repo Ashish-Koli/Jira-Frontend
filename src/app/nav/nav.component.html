@@ -6,13 +6,14 @@
 
   <div class="nav-links" *ngIf="isAuthenticated">
     <ng-container *ngIf="role == 'Admin'">
-      <button mat-button routerLink="/project">Project</button>
-      <button mat-button routerLink="/board">Board</button>
-      <button mat-button routerLink="/sprint">Sprint</button>
-      <button mat-button routerLink="/epic">Epic</button>
+      <button mat-button routerLink="/project"  routerLinkActive="active">Project</button>
+      <button mat-button routerLink="/board" routerLinkActive="active">Board</button>
+      <button mat-button routerLink="/sprint" routerLinkActive="active">Sprint</button>
+      <button mat-button routerLink="/epic" routerLinkActive="active">Epic</button>
     </ng-container>
     <button
       mat-button
+     routerLinkActive="active"
       [matMenuTriggerFor]="projectMenu"
       *ngIf="isAuthenticated"
     >
@@ -22,7 +23,7 @@
 
   <button
     mat-button
-    class="signup-button"
+    class="button-option"
     routerLink="/login"
     *ngIf="!isAuthenticated"
   >
@@ -30,7 +31,10 @@
   </button>
 
   <ng-container *ngIf="isAuthenticated && user">
-    <button mat-button class="logout-button" [matMenuTriggerFor]="profileMenu">
+    <button mat-button  
+    class="button-option"
+ 
+    [matMenuTriggerFor]="profileMenu">
       {{ user.userName }}
     </button>
     <!-- {{ user.userName }} -->
@@ -68,11 +72,11 @@
           </button>
         </ng-container>
 
-        <!-- [routerLink]="'/'+project.projectName+'/'+board.boardName+'/'+sprint.sprintName+'/' +sprint.sprintId " -->
         <mat-menu #sprintMenu="matMenu">
           <ng-container *ngFor="let sprint of board.sprintList">
             <button
               mat-menu-item
+               routerLinkActive="active"
               (click)="sprintClicked(project, board, sprint)"
             >
               {{ sprint.sprintName }}

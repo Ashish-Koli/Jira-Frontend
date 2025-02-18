@@ -4,20 +4,6 @@
   align-items: center;
 }
 
-.scroll-container {
-  display: flex;
-  overflow-x: auto;
-  white-space: nowrap;
-  padding: 10px;
-  gap: 10px;
-}
- 
-.user-button {
-  flex: 0 0 auto;
-  background-color: #1976d2;
-  color: white;
-  border-radius: 20px;
-}
 
 .scroll-wrapper {
   display: flex;
@@ -32,35 +18,24 @@
   scroll-behavior: smooth;
   padding: 10px;
   gap: 10px;
-  width: 300px; /* Adjust as needed */
+  width: 300px; 
 }
- 
-/* Hide Default Scrollbar */
-.scroll-container::-webkit-scrollbar {
-  display: none;
+
+.scroll-container .user-button{
+  min-width: fit-content;
 }
- 
-.scroll-container {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+
+.scroll-container .user-button:hover{
+  border: 1px solid black;
 }
- 
-.user-button {
-  flex: 0 0 auto;
-  background-color: #1976d2;
+
+.scroll-container .button-selected{
+  min-width: fit-content;
+
+  background-color: #1D7AFC;
   color: white;
-  border-radius: 20px;
 }
- 
-/* Hide Default Scrollbar */
-.scroll-container::-webkit-scrollbar {
-  display: none;
-}
- 
-.scroll-container {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
+
 .main{
   display: flex;
   flex-direction: column;   
@@ -153,34 +128,32 @@ h3{
   padding: 10px;
 }
 
- /* .task {
-  } */
 
   .story-card-todo {
     width: 320px;
     margin-bottom: 10px;
-    border-left: 5px solid #3f51b5; /* Blue border for emphasis */
+    border-left: 5px solid #3f51b5; 
     transition: transform 0.2s ease-in-out;
   }
   
   .story-card-done {
     width: 320px;
     margin-bottom: 10px;
-    border-left: 5px solid #07ff1c; /* Blue border for emphasis */
+    border-left: 5px solid #07ff1c; 
     transition: transform 0.2s ease-in-out;
   }
   
   .story-card-inprogress {
     width: 320px;
     margin-bottom: 10px;
-    border-left: 5px solid #fbff00; /* Blue border for emphasis */
+    border-left: 5px solid #fbff00; 
     transition: transform 0.2s ease-in-out;
   }
   
   .story-card-block {
     width: 320px;
     margin-bottom: 10px;
-    border-left: 5px solid rgb(192, 191, 191); /* Blue border for emphasis */
+    border-left: 5px solid rgb(192, 191, 191); 
     transition: transform 0.2s ease-in-out;
   }
   

@@ -1,9 +1,39 @@
 
-   .story-card {
-    min-width: 800px;
-    min-height: 800px;
-    padding: 10px;
+  
+  .mainn{
+    height: 850px;
+    overflow: scroll;
+    overflow-x: hidden;
+
   }
+
+
+  .mainn::-webkit-scrollbar {
+    width: 0.5em;
+  }
+   
+  .mainn::-webkit-scrollbar-track {
+    background-color: #bdbdbd;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 5px;
+    border-radius: 50px;
+  }
+   
+  .mainn::-webkit-scrollbar-thumb {
+    background-color: #1D7AFC;
+    border-radius: 50px;
+  }
+
+
+  .story-card {
+    width: 800px;
+    height: fit-content;
+    padding: 10px;
+  
+  }
+
+ 
 
  
   .status-badge {
@@ -37,41 +67,78 @@
   }
 
   .description {
-    font-size: 1.1em;
+    font-size: 20px;
     margin-top: 20px;
   }
 
-
+.description-box{
+  min-height: 200px;
+  border: 0.5px solid rgb(103, 103, 103);
+  padding-left: 20px;
+  margin-top: 10px;
+  background-color: rgb(220, 220, 220);
+}
+ 
   .story-details {
     display: flex;
     align-items: center;
     margin: 8px 0;
-    font-size: 0.95em;
+    font-size: 16px;
+  }
+
+  .story-details-epic{
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    padding-bottom: 20px;
+  }
+
+  .names{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 8px 0;
+    font-size: 15px;
   }
 
   .story-details mat-icon {
     margin-right: 8px;
-    color: #757575;
+    color: #0008ff;
+  }
+  .story-details-epic mat-icon {
+    margin-right: 8px;
+    color: #fff9f9;
+    background-color: #0008ff;
+    border-radius: 50px;
   }
   
   .comments-section{
-    margin-top: 20px;
     border: #3f51b5 1px solid;
-    padding-top: 10px;
+    padding: 10px;
+    margin-left: 12px;
+    margin-right: 12px;
+    margin-bottom: 30px;
   }
 
   .comments-section-comment {
     display: flex;
     align-items: center;
-    padding: 5px;
+    padding: 10px;
+    padding-left: 20px;
     background-color: #e9e9e9;
     border-radius: 5px;
   }
 
-  .comments-section mat-icon {
+  .task-icon {
     margin-right: 6px;
-    color: #3f51b5;
+    color:#3f5cff;
   }
+
+  .comment-icon {
+    margin-right: 6px;
+    color:#ff008c;
+  }
+
 
   .comment-field {
     width: 100%;

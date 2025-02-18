@@ -1,5 +1,7 @@
+<div class="mainn">
+
+
 <mat-card class="story-card" *ngIf="story != null">
-  <!-- Story Header -->
   <mat-card-header>
     <mat-card-title class="title">{{ story.storyName }}</mat-card-title>
     <mat-card-subtitle>
@@ -11,23 +13,31 @@
     </mat-card-subtitle>
   </mat-card-header>
 
-  <!-- Story Content -->
   <mat-card-content>
-    <p class="description">{{ story.description }}</p>
+    <mat-card class="description-box">
+      <p class="description"><strong>Description: </strong> {{ story.description }}</p>
+    </mat-card>
 
-    <div class="story-details">
-      <mat-icon>person</mat-icon>
-      <span> {{ story.user.userName }}</span>
+    <div class="names">
+      <div class="story-details">
+        <mat-icon>edit</mat-icon>
+        <span> <strong>Created By: </strong> {{ story.user.userName }}</span>
+      </div>
+      <div class="story-details">
+        <mat-icon>person</mat-icon>
+        <span> <strong>Assigne: </strong> {{ story.assignedTo.userName }}</span>
+      </div>
     </div>
+   
 
-    <div class="story-details">
+    <div class="story-details-epic">
       <mat-icon>flag</mat-icon>
       <span><strong>Epic:</strong> {{ story.epic.epicName }} </span>
     </div>
   </mat-card-content>
 
   <mat-card-content class="comments-section">
-    <h4><mat-icon>task</mat-icon> Sub-Task</h4>
+    <h4><mat-icon class="task-icon">task</mat-icon> Sub-Task</h4>
 
   
     <div *ngIf="subTasks.length > 0; else noSubTask">
@@ -35,12 +45,6 @@
         <mat-list-item *ngFor="let subTask of subTasks">
           <h4 mat-line class="comments-section-comment">
             {{ subTask.taskName }}
-            <!-- <button
-              (click)="deleteComment(subTask.taskId)"
-              style="margin-left: 50px"
-            >
-              <mat-icon>delete</mat-icon>
-            </button> -->
           </h4>
         </mat-list-item>
       </mat-list>
@@ -60,7 +64,7 @@
 
 
   <mat-card-content class="comments-section">
-    <h4><mat-icon>comment</mat-icon> Comments</h4>
+    <h4><mat-icon class="comment-icon">comment</mat-icon> Comments</h4>
 
   
     <div *ngIf="comments.length > 0; else noComments">
@@ -68,12 +72,6 @@
         <mat-list-item *ngFor="let comment of comments">
           <h4 mat-line class="comments-section-comment">
             {{ comment.comment }}
-            <!-- <button
-              (click)="deleteComment(comment.commentId)"
-              style="margin-left: 50px"
-            >
-              <mat-icon>delete</mat-icon>
-            </button> -->
           </h4>
         </mat-list-item>
       </mat-list>
@@ -90,3 +88,4 @@
     </button>
   </mat-card-content>
 </mat-card>
+</div>

@@ -1,3 +1,12 @@
+.main-container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center ;
+}
+
 .main{
     height: 500px;
     width: 500px;
@@ -14,4 +23,7 @@
 
 mat-form-field{
     width: 400px;
+}
+button{
+    margin-top: 5px;
 }

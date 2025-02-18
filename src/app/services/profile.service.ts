@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UpdateUser, UserResponse } from '../dto/project';
+import { ChangePassword, UpdateUser, UserResponse } from '../dto/project';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -17,6 +17,14 @@ export class ProfileService {
     return this.http.put<UserResponse>(
       `http://localhost:8080/user/updateProfile/${id}`,
       user
+    );
+  }
+
+  
+  changePassword(id: number, passwordChange:ChangePassword): Observable<UserResponse> {
+    return this.http.put<UserResponse>(
+      `http://localhost:8080/user/changePassword/${id}`,
+      passwordChange
     );
   }
 }

@@ -51,26 +51,32 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    const userName = this.loginForm.value.userName;
-    const password = this.loginForm.value.password;
-    let loginDTO = {
-      userName: userName,
-      password: password,
-    };
-    this.auth.login(loginDTO).subscribe(
-      (data: TokenResponse) => {
-        this.token = data;
-        this.auth.setToken(data.token, data.role, data.userId);
-        this.router.navigate(['/project']);
-      },
-      (error) => {
-        this.snackbar.open(error.error.message, "cancel")
-      }
-    );
+    if(this.loginForm.valid){
+      const userName = this.loginForm.value.userName;
+      const password = this.loginForm.value.password;
+      let loginDTO = {
+        userName: userName,
+        password: password,
+      };
+      this.auth.login(loginDTO).subscribe(
+        (data: TokenResponse) => {
+          this.token = data;
+          this.auth.setToken(data.token, data.role, data.userId);
+          this.router.navigate(['/project']);
+        },
+        (error) => {
+          this.snackbar.open(error.error.message, "cancel")
+        }
+      );
+    }
+  
   }
 
   register() {
-    const newUser = this.registerForm.value;
-    this.auth.register(newUser).subscribe();
+    if(this.registerForm.valid){
+      const newUser = this.registerForm.value;
+      this.auth.register(newUser).subscribe();
+    }
+  
   }
 }

@@ -28,8 +28,9 @@
 .main-container{
     height: 600px;
     width: 600px;
-    box-shadow: 0 0 40px #036cff;
-    /* background-color: #1D7AFC; */
+    border: 2px solid #036cff ;
+    box-shadow: 0 0 40px #b8b8b8;
+    background-color: #ffffff;
 }
 
 .container{
@@ -50,5 +51,5 @@
 }
 .btn{
   width: 200px;
-  align-self: flex-start;
+  align-self:center;
 }

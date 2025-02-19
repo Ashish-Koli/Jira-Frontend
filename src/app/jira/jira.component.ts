@@ -195,7 +195,9 @@ export class JiraComponent implements OnInit {
         storyStatusId: this.getStatus(event.container.id),
       };
 
-      this.storyService.updateStoryStatus(newStatus, task.storyId).subscribe();
+      this.storyService.updateStoryStatus(newStatus, task.storyId).subscribe(()=>{
+        this.fetchStories(this.id);
+      });
     }
   }
 

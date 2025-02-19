@@ -21,8 +21,13 @@
   }
    
   .mainn::-webkit-scrollbar-thumb {
-    background-color: #1D7AFC;
+    background-color: #6aa7fc;
     border-radius: 50px;
+  }
+
+  .mainn::-webkit-scrollbar-thumb:hover {
+    background-color: #1D7AFC;
+
   }
 
 

@@ -60,7 +60,7 @@ export class StoryFormComponent implements OnInit {
       description: ['', [Validators.required]],
       storyStatus: [, [Validators.required]],
       epic: [, [Validators.required]],
-      assignedTo:[]
+      assignedTo:[, [Validators.required]]
     });
 
     if (this.data !== null) {
@@ -90,34 +90,37 @@ export class StoryFormComponent implements OnInit {
   }
 
   save() {
-    const newStory: AddStory = this.storyForm.value;
-    newStory.board = this.board;
-    newStory.sprint = this.sprint;
-    if (this.editMode) {
+    if(this.storyForm.valid){
+      const newStory: AddStory = this.storyForm.value;
+      newStory.board = this.board;
+      newStory.sprint = this.sprint;
+      if (this.editMode) {
+        this.storyService
+          .updateStory(newStory, this.currentId)
+          .subscribe((data) => {
+            this.dialogRef.close(true)
+            const email:Email = {
+              to:data.assignedTo.email,
+              subject:"A Story Has Been Modified",
+              body:data.storyName
+          }
+          this.emailService.sendEmail(email).subscribe();
+          });
+      } else {
       this.storyService
-        .updateStory(newStory, this.currentId)
+        .createStory(newStory)
         .subscribe((data) => {
           this.dialogRef.close(true)
           const email:Email = {
-            to:data.assignedTo.email,
-            subject:"A Story Has Been Modified",
-            body:data.storyName
-        }
-        this.emailService.sendEmail(email).subscribe();
+              to:data.assignedTo.email,
+              subject:"New Story Assigned To You",
+              body:data.storyName
+          }
+          this.emailService.sendEmail(email).subscribe(); 
         });
-    } else {
-    this.storyService
-      .createStory(newStory)
-      .subscribe((data) => {
-        this.dialogRef.close(true)
-        const email:Email = {
-            to:data.assignedTo.email,
-            subject:"New Story Assigned To You",
-            body:data.storyName
-        }
-        this.emailService.sendEmail(email).subscribe(); 
-      });
+      } 
     }
+    
 
   }
 }

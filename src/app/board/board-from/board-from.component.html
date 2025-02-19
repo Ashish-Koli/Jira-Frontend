@@ -26,13 +26,16 @@
           >{{ project.projectName }}</mat-option
         >
       </mat-select>
+      <mat-error *ngIf="boardForm.get('project')?.hasError('required')"
+        >Select a project!</mat-error
+      >
     </mat-form-field>
 
     <button
       type="submit"
       mat-raised-button
       color="primary"
-      [disabled]="boardForm.invalid"
+
     >
       {{ value }}
     </button>

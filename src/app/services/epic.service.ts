@@ -9,27 +9,27 @@ import { AddEpic, EpicResponse } from '../dto/project';
 export class EpicService {
   constructor(private http: HttpClient) {}
 
-  getAllEpicByUserId(id: number): Observable<EpicResponse[]> {
-    return this.http.get<EpicResponse[]>(`http://localhost:8080/epic/user/${id}`)
+  getAllEpicByUserId(userId: number): Observable<EpicResponse[]> {
+    return this.http.get<EpicResponse[]>(`http://localhost:8080/epic/user/${userId}`)
   
   }
 
 
   createEpic(epic: AddEpic): Observable<EpicResponse> {
     return this.http.post<EpicResponse>(
-      `http://localhost:8080/epic/create`,
+      `http://localhost:8080/epic`,
       epic
     );
   }
 
-  updateEpic(epic: AddEpic, id: number): Observable<EpicResponse> {
+  updateEpic(epic: AddEpic, epicId: number): Observable<EpicResponse> {
     return this.http.put<EpicResponse>(
-      `http://localhost:8080/epic/update/${id}`,
+      `http://localhost:8080/epic/${epicId}`,
       epic
     );
   }
 
-  deleteEpic(id: number): Observable<void> {
-    return this.http.delete<void>(`http://localhost:8080/epic/delete/${id}`);
+  deleteEpic(epicId: number): Observable<void> {
+    return this.http.delete<void>(`http://localhost:8080/epic/${epicId}`);
   }
 }

@@ -23,6 +23,8 @@
 
 .scroll-container .user-button{
   min-width: fit-content;
+  border: 1px solid white;
+
 }
 
 .scroll-container .user-button:hover{

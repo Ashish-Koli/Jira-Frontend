@@ -23,31 +23,31 @@ export class StoryService {
 
   getCategorizedStories(sprintId: number): Observable<StoryCategories> {
     return this.http.get<StoryCategories>(
-      `http://localhost:8080/sprint/${sprintId}/stories`
+      `http://localhost:8080/sprint/stories/${sprintId}`
     );
   }
 
   createStory(story: AddStory): Observable<StoryResponse> {
-    return this.http.post<StoryResponse>(`http://localhost:8080/story/create`, story);
+    return this.http.post<StoryResponse>(`http://localhost:8080/story`, story);
   }
 
   updateStoryStatus(
     storyStatus: UpdateStoryStatusDTO,
-    id: number
+    storyId: number
   ): Observable<UpdateStoryStatusDTO> {
     return this.http.put<UpdateStoryStatusDTO>(
-      `http://localhost:8080/story/update/storyStatus/${id}`,
+      `http://localhost:8080/story/storyStatus/${storyId}`,
       storyStatus
     );
   }
 
-  deleteStory(id: number): Observable<void> {
-    return this.http.delete<void>(`http://localhost:8080/story/delete/${id}`);
+  deleteStory(storyId: number): Observable<void> {
+    return this.http.delete<void>(`http://localhost:8080/story/${storyId}`);
   }
 
-  updateStory(story: AddStory, id: number): Observable<StoryResponse> {
+  updateStory(story: AddStory, storyId: number): Observable<StoryResponse> {
     return this.http.put<StoryResponse>(
-      `http://localhost:8080/story/update/${id}`,
+      `http://localhost:8080/story/${storyId}`,
       story
     );
   }
@@ -55,35 +55,35 @@ export class StoryService {
 
   getAllStoryStatus(): Observable<StoryStatusResponse[]> {
     return this.http.get<StoryStatusResponse[]>(
-      `http://localhost:8080/storyStatus/allStoryStatus`
+      `http://localhost:8080/storyStatus/allStoryStatuses`
     );
   }
 
-  getAllCommentByStoryId(id: number): Observable<CommentResponse[]> {
+  getAllCommentByStoryId(storyId: number): Observable<CommentResponse[]> {
     return this.http.get<CommentResponse[]>(
-      `http://localhost:8080/comments/allComment/${id}`
+      `http://localhost:8080/comment/allComments/${storyId}`
     );
   }
 
-  getAllSubTaskByStoryId(id: number): Observable<SubTaskResponse[]> {
+  getAllSubTaskByStoryId(storyId: number): Observable<SubTaskResponse[]> {
     return this.http.get<SubTaskResponse[]>(
-      `http://localhost:8080/subTask/allSubTask/${id}`
+      `http://localhost:8080/subTask/allSubTasks/${storyId}`
     );
   }
 
   addComment(comment: AddComment): Observable<AddComment> {
     return this.http.post<AddComment>(
-      `http://localhost:8080/comments/create`,
+      `http://localhost:8080/comment`,
       comment
     );
   }
   addSubTask(task: AddSubTask): Observable<AddSubTask> {
-    return this.http.post<AddSubTask>(`http://localhost:8080/subTask/create`, task);
+    return this.http.post<AddSubTask>(`http://localhost:8080/subTask`, task);
   }
 
-  deleteComment(id: number): Observable<void> {
+  deleteComment(commentId: number): Observable<void> {
     return this.http.delete<void>(
-      `http://localhost:8080/comments/delete/${id}`
+      `http://localhost:8080/comment/${commentId}`
     );
   }
 

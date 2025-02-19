@@ -44,7 +44,8 @@ export class ProjectFormComponent implements OnInit {
     }
   }
   save() {
-    const newProject: AddProject = this.projectForm.value;
+    if(this.projectForm.valid){
+      const newProject: AddProject = this.projectForm.value;
     if (this.editMode) {
       this.projectService
         .updateProject(newProject, this.currentId)
@@ -54,5 +55,7 @@ export class ProjectFormComponent implements OnInit {
         .createProject(newProject)
         .subscribe(() => this.dialogRef.close(true));
     }
+    }
+    
   }
 }

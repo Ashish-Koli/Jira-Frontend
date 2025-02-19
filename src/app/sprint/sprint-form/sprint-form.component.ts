@@ -59,37 +59,40 @@ export class SprintFormComponent implements OnInit {
     }
   }
   save() {
-    const sprint: AddSprint = {
-      sprintNo: this.sprintForm.value.sprintNo,
-      sprintName: this.sprintForm.value.sprintName,
-      sprintPoint: this.sprintForm.value.sprintPoint,
-      startDate: this.sprintForm.value.startDate,
-      endDate: this.sprintForm.value.endDate,
-      board: this.sprintForm.value.board,
-    };
-
-    if (this.editMode) {
-      this.sprintService
-        .updateSprint(sprint, this.currentIndex)
-        .subscribe((data) => {
+    if(this.sprintForm.valid){
+      const sprint: AddSprint = {
+        sprintNo: this.sprintForm.value.sprintNo,
+        sprintName: this.sprintForm.value.sprintName,
+        sprintPoint: this.sprintForm.value.sprintPoint,
+        startDate: this.sprintForm.value.startDate,
+        endDate: this.sprintForm.value.endDate,
+        board: this.sprintForm.value.board,
+      };
+  
+      if (this.editMode) {
+        this.sprintService
+          .updateSprint(sprint, this.currentIndex)
+          .subscribe((data) => {
+            const release: AddRelease = {
+              sprint: data.sprintId,
+              releaseName: this.sprintForm.value.releaseName,
+            };
+            this.sprintService
+              .updateRelease(release)
+              .subscribe(() => this.dialogRef.close(true));
+          });
+      } else {
+        this.sprintService.createSprint(sprint).subscribe((data) => {
           const release: AddRelease = {
             sprint: data.sprintId,
             releaseName: this.sprintForm.value.releaseName,
           };
           this.sprintService
-            .updateRelease(release)
+            .createRelease(release)
             .subscribe(() => this.dialogRef.close(true));
         });
-    } else {
-      this.sprintService.createSprint(sprint).subscribe((data) => {
-        const release: AddRelease = {
-          sprint: data.sprintId,
-          releaseName: this.sprintForm.value.releaseName,
-        };
-        this.sprintService
-          .createRelease(release)
-          .subscribe(() => this.dialogRef.close(true));
-      });
+      }
     }
+  
   }
 }

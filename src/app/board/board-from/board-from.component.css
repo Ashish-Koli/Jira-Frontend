@@ -1,5 +1,5 @@
 .main{
-    height: 300px;
+    height: fit-content;
     width: 500px;
     padding: 20px;
 }
@@ -14,5 +14,7 @@ mat-form-field{
 }
 
 button{
+    margin-top: 10px;
     margin-bottom: 10px;
 }
+

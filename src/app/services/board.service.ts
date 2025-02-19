@@ -9,25 +9,25 @@ import { AddBoard, BoardResponse, EpicResponse } from '../dto/project';
 export class BoardService {
   constructor(private http: HttpClient) {}
 
-  getAllBoardsByUserId(id: number): Observable<BoardResponse[]> {
-    return this.http.get<BoardResponse[]>(`http://localhost:8080/board/user/${id}`);
+  getAllBoardsByUserId(userId: number): Observable<BoardResponse[]> {
+    return this.http.get<BoardResponse[]>(`http://localhost:8080/board/user/${userId}`);
   }
 
   createBoard(board: AddBoard): Observable<BoardResponse> {
     return this.http.post<BoardResponse>(
-      `http://localhost:8080/board/create`,
+      `http://localhost:8080/board`,
       board
     );
   }
 
-  updateBoard(board: AddBoard, id: number): Observable<BoardResponse> {
+  updateBoard(board: AddBoard, boardId: number): Observable<BoardResponse> {
     return this.http.put<BoardResponse>(
-      `http://localhost:8080/board/update/${id}`,
+      `http://localhost:8080/board/${boardId}`,
       board
     );
   }
 
-  deleteBoard(id: number): Observable<void> {
-    return this.http.delete<void>(`http://localhost:8080/board/delete/${id}`);
+  deleteBoard(boardId: number): Observable<void> {
+    return this.http.delete<void>(`http://localhost:8080/board/${boardId}`);
   }
 }

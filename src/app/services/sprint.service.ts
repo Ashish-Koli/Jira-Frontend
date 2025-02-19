@@ -9,41 +9,41 @@ import { AddRelease, AddSprint, ReleaseNameResponse, SprintResponse } from '../d
 export class SprintService {
   constructor(private http: HttpClient) {}
 
-  getAllSprintByUserId(id: number): Observable<SprintResponse[]> {
-    return this.http.get<SprintResponse[]>(`http://localhost:8080/sprint/user/${id}`)
+  getAllSprintByUserId(userId: number): Observable<SprintResponse[]> {
+    return this.http.get<SprintResponse[]>(`http://localhost:8080/sprint/user/${userId}`)
   }
 
-  getSprintById(id:number): Observable<SprintResponse> {
-    return this.http.get<SprintResponse>(`http://localhost:8080/sprint/${id}`)
-  }
+  // getSprintById(sprintId:number): Observable<SprintResponse> {
+  //   return this.http.get<SprintResponse>(`http://localhost:8080/sprint/${sprintId}`)
+  // }
 
-  getSprintDetailsById(id:number): Observable<SprintResponse> {
-    return this.http.get<SprintResponse>(`http://localhost:8080/sprint/details/${id}`)
+  getSprintDetailsById(sprintId:number): Observable<SprintResponse> {
+    return this.http.get<SprintResponse>(`http://localhost:8080/sprint/${sprintId}`)
   }
 
   createSprint(sprint: AddSprint): Observable<SprintResponse> {
     return this.http.post<SprintResponse>(
-      `http://localhost:8080/sprint/create`,
+      `http://localhost:8080/sprint`,
       sprint
     );
   }
 
-  updateSprint(sprint: AddSprint, id: number): Observable<SprintResponse> {
+  updateSprint(sprint: AddSprint, sprintId: number): Observable<SprintResponse> {
     return this.http.put<SprintResponse>(
-      `http://localhost:8080/sprint/update/${id}`,
+      `http://localhost:8080/sprint/${sprintId}`,
       sprint
     );
   }
 
-  deleteSprint(id: number): Observable<void> {
-    return this.http.delete<void>(`http://localhost:8080/sprint/delete/${id}`);
+  deleteSprint(sprintId: number): Observable<void> {
+    return this.http.delete<void>(`http://localhost:8080/sprint/${sprintId}`);
   }
 
   createRelease(release: AddRelease): Observable<ReleaseNameResponse> {
-    return this.http.post<ReleaseNameResponse>(`http://localhost:8080/release/create`, release);
+    return this.http.post<ReleaseNameResponse>(`http://localhost:8080/release`, release);
   }
 
   updateRelease(release: AddRelease): Observable<ReleaseNameResponse> {
-    return this.http.put<ReleaseNameResponse>(`http://localhost:8080/release/update`, release);
+    return this.http.put<ReleaseNameResponse>(`http://localhost:8080/release`, release);
   }
 }

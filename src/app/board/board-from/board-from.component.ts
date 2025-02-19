@@ -52,15 +52,18 @@ export class BoardFromComponent implements OnInit {
   }
 
   save() {
-    const newBoard: AddBoard = this.boardForm.value;
-    if (this.editMode) {
-      this.boardService
-        .updateBoard(newBoard, this.currentIndex)
-        .subscribe(() => this.dialogRef.close(true));
-    } else {
-      this.boardService
-        .createBoard(newBoard)
-        .subscribe(() => this.dialogRef.close(true));
+    if(this.boardForm.valid){
+      const newBoard: AddBoard = this.boardForm.value;
+      if (this.editMode) {
+        this.boardService
+          .updateBoard(newBoard, this.currentIndex)
+          .subscribe(() => this.dialogRef.close(true));
+      } else {
+        this.boardService
+          .createBoard(newBoard)
+          .subscribe(() => this.dialogRef.close(true));
+      }
     }
+   
   }
 }

@@ -46,6 +46,9 @@
           {{ epic.epicName }}
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="storyForm.get('epic')?.hasError('required')"
+      >epic is required</mat-error
+    >
     </mat-form-field>
 
     
@@ -56,16 +59,15 @@
           {{ user.userName }}
         </mat-option>
       </mat-select>
-      <!-- <mat-error *ngIf="storyForm.get('assignedTo')?.hasError('required')"
-        >story status is required</mat-error
-      > -->
+      <mat-error *ngIf="storyForm.get('assignedTo')?.hasError('required')"
+        >Select a assigne!</mat-error
+      >
     </mat-form-field>
 
     <button
       type="submit"
       mat-raised-button
       color="primary"
-      [disabled]="storyForm.invalid"
     >
       {{ value }}
     </button>

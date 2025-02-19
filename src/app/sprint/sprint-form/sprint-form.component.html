@@ -57,6 +57,15 @@
         [for]="picker"
       ></mat-datepicker-toggle>
       <mat-date-range-picker #picker></mat-date-range-picker>
+      <mat-error *ngIf="sprintForm.get('startDate')?.hasError('required') && sprintForm.get('endDate')?.valid "
+        >Select a start date!</mat-error
+      >
+      <mat-error *ngIf="sprintForm.get('endDate')?.hasError('required')  && sprintForm.get('startDate')?.valid "
+        >Select a end date!</mat-error
+      >
+      <mat-error *ngIf="sprintForm.get('startDate')?.hasError('required') && sprintForm.get('endDate')?.hasError('required')"
+      >Select a start and end date!</mat-error
+    >
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="input">
@@ -69,6 +78,9 @@
           board.boardName
         }}</mat-option>
       </mat-select>
+      <mat-error *ngIf="sprintForm.get('board')?.hasError('required')"
+        >Select a board!</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="input">

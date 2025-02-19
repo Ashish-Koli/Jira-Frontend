@@ -56,15 +56,18 @@ export class EpicFormComponent implements OnInit {
   }
 
   save() {
-    const epic: AddEpic = this.epicForm.value;
-    if (this.editMode) {
-      this.epicService
-        .updateEpic(epic, this.currentIndex)
-        .subscribe(() => this.dialogRef.close(true));
-    } else {
-      this.epicService
-        .createEpic(epic)
-        .subscribe(() => this.dialogRef.close(true));
+    if(this.epicForm.valid){
+      const epic: AddEpic = this.epicForm.value;
+      if (this.editMode) {
+        this.epicService
+          .updateEpic(epic, this.currentIndex)
+          .subscribe(() => this.dialogRef.close(true));
+      } else {
+        this.epicService
+          .createEpic(epic)
+          .subscribe(() => this.dialogRef.close(true));
+      }
     }
+    
   }
 }

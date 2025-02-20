@@ -17,6 +17,7 @@
           <mat-form-field appearance="outline" class="input">
             <mat-label>Project Description</mat-label>
             <textarea
+            class="textarea"
               matInput
               formControlName="projectDescription"
               title="project description"
@@ -29,6 +30,7 @@
           </mat-form-field>
           
           <mat-form-field appearance="outline" class="input">
+            <mat-label>Users</mat-label>
             <mat-select multiple class="custom-select" formControlName="userList" placeholder="Add User">
               <mat-option *ngFor="let user of users" [value]="user.userId">{{user.userName}}</mat-option>
           </mat-select>

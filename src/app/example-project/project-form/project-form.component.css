@@ -16,3 +16,6 @@ mat-form-field{
 button{
     margin-bottom: 10px;
 }
+.textarea{
+    height: 200px;
+}

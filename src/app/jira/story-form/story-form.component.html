@@ -17,18 +17,20 @@
     <mat-form-field appearance="outline" class="input">
       <mat-label>Story Description</mat-label>
       <textarea
+        style="height: 200px;"
         matInput
         formControlName="description"
         title="story description"
         placeholder="Enter a story description"
       ></textarea>
       <mat-error *ngIf="storyForm.get('description')?.hasError('required')"
-        >story name is required</mat-error
+        >story description is required</mat-error
       >
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="input">
       <mat-label>Story Status</mat-label>
+      
       <mat-select formControlName="storyStatus">
         <mat-option *ngFor="let status of storyStatus" [value]="status.id">
           {{ status.name }}

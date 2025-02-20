@@ -64,11 +64,12 @@
         >Select a end date!</mat-error
       >
       <mat-error *ngIf="sprintForm.get('startDate')?.hasError('required') && sprintForm.get('endDate')?.hasError('required')"
-      >Select a start and end date!</mat-error
+      >Select a start date and end date!</mat-error
     >
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="input">
+      <mat-label>Board</mat-label>
       <mat-select
         class="custom-select"
         formControlName="board"

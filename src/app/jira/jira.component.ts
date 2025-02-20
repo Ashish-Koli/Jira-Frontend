@@ -164,8 +164,8 @@ export class JiraComponent implements OnInit {
     }
 
     const totalDays = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
-    const passedDays =
-      (today.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
+    const passedDays = (today.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
+  
 
     const progress = Math.round((passedDays / totalDays) * 100);
     const daysLeft = Math.ceil(
@@ -174,6 +174,7 @@ export class JiraComponent implements OnInit {
 
     this.value = progress;
     this.daysLeft = daysLeft;
+
   }
 
   drop(event: CdkDragDrop<StoryResponse[]>) {

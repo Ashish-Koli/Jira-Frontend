@@ -17,3 +17,8 @@ button{
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+.textarea{
+    height: 600px;
+    background-color: aqua;
+}
